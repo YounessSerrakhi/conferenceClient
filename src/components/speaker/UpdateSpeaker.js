@@ -55,7 +55,7 @@ const UpdateSpeaker = ({ speakerId }) => {
         formDataToSend.append('image', formData.image);
 
         try {
-            const response = await axios.put(`/api/speakers/${speakerId}`, formDataToSend, {
+            const response = await axios.put(`http://127.0.0.1:8000/api/speakers/${speakerId}`, formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

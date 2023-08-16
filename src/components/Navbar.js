@@ -1,57 +1,90 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-
-
 export default function Navbar() {
+  const [transparence, setTransparance] = useState(0);
+
+  const handleScroll = () => {
+    setTransparance(window.scrollY/500);
+    
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  const myStyle = {
+    backgroundColor: `rgba(0, 0, 0, ${transparence})`
+  };
+
   return (
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0">
-    <div class="container">
-      <a class="navbar-brand" href="#!"><span style={{color: '#5e9693'}}>Psycho</span><span style={{color: "#fff"}}>logist</span></a>
-      <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
-        data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
+    <nav className="navbar navbar-expand-lg navbar-light fixed-top shadow-0" style={myStyle}>
+    <div className="container">
+      <a className="navbar-brand" href="#!">
+        <span style={{ color: '#5e9693' }}>Psycho</span>
+        <span style={{ color: '#fff' }}>logist</span>
+      </a>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i className="fas fa-bars"></i>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#!">Offer</a>
+      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul className="navbar-nav me-auto">
+          <li className="nav-item">
+            <a className="nav-link" href="#!">
+              Offer
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#!">Features</a>
+          <li className="nav-item">
+            <a className="nav-link" href="#!">
+              Features
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#!">Portfolio</a>
+          <li className="nav-item">
+            <a className="nav-link" href="#!">
+              Portfolio
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#!">Reference</a>
+          <li className="nav-item">
+            <a className="nav-link" href="#!">
+              Reference
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#!">About</a>
+          <li className="nav-item">
+            <a className="nav-link" href="#!">
+              About
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#!">Team</a>
+          <li className="nav-item">
+            <a className="nav-link" href="#!">
+              Team
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#!">Contact</a>
+          <li className="nav-item">
+            <a className="nav-link" href="#!">
+              Contact
+            </a>
           </li>
         </ul>
-        <ul class="navbar-nav d-flex flex-row">
-          <li class="nav-item me-3 me-lg-0">
-            <a class="nav-link" href="#!">
-              <i class="fas fa-shopping-cart"></i>
+        <ul className="navbar-nav d-flex flex-row">
+        <li className="nav-item">
+            <a className="nav-link" href="#!">
+              register
             </a>
           </li>
-          <li class="nav-item me-3 me-lg-0">
-            <a class="nav-link" href="#!">
-              <i class="fab fa-twitter"></i>
-            </a>
-          </li>
-          <li class="nav-item me-3 me-lg-0">
-            <a class="nav-link" href="#!">
-              <i class="fab fa-instagram"></i>
+          <li className="nav-item">
+            <a className="nav-link" href="#!">
+              login
             </a>
           </li>
         </ul>

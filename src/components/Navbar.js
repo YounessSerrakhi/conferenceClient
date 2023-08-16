@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link} from 'react-router-dom';
+import '../assets/css/main.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
@@ -78,14 +80,14 @@ export default function Navbar() {
         </ul>
         <ul className="navbar-nav d-flex flex-row">
         <li className="nav-item">
-            <a className="nav-link" href="#!">
+            <Link className="nav-link" to="register">
               register
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#!">
+            <Link className="nav-link" to="login">
               login
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

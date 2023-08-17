@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const StoreActivity = () => {
+    const [presenters, setPresenters] = useState([])
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        datetime: '', // Use datetime for the date and time input
+        time: '', // Use datetime for the date and time input
         presenterId: '',
     });
 
@@ -13,12 +14,8 @@ const StoreActivity = () => {
         // Fetch the list of presenters (speakers) to populate the dropdown
         const fetchPresenters = async () => {
             try {
-                const response = await axios.get('/api/presenters'); // Adjust the endpoint as needed
+                const response = await axios.get('http://127.0.0.1:8000/api/speakers'); // Adjust the endpoint as needed
                 const presentersData = response.data;
-
-                // Set presenters data in the state
-                // Assuming presentersData is an array of presenter objects with properties id and name
-                // Replace "id" and "name" with the actual properties in your data
                 setPresenters(presentersData);
             } catch (error) {
                 console.error('Error fetching presenters:', error);
@@ -40,7 +37,7 @@ const StoreActivity = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/api/activities', formData);
+            const response = await axios.post('http://127.0.0.1:8000/api/activities', formData);
             console.log('Response:', response.data);
         } catch (error) {
             console.error('Error storing activity:', error);
@@ -71,8 +68,8 @@ const StoreActivity = () => {
                 <div>
                     <label>Datetime:</label>
                     <input
-                        type="datetime-local" // Use datetime-local for date and time input
-                        name="datetime"
+                        type="time" // Use datetime-local for date and time input
+                        name="time"
                         value={formData.datetime}
                         onChange={handleInputChange}
                     />
@@ -87,7 +84,7 @@ const StoreActivity = () => {
                         <option value="">Select Presenter</option>
                         {presenters.map((presenter) => (
                             <option key={presenter.id} value={presenter.id}>
-                                {presenter.name}
+                                {presenter.firstname} {presenter.lastname}
                             </option>
                         ))}
                     </select>

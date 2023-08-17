@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function CreatePaper() {
+function StorePaper() {
     const [resumerFile, setResumerFile] = useState(null);
     const [auteurId, setAuteurId] = useState(''); // Populate this based on your authentication logic
 
@@ -18,7 +18,7 @@ function CreatePaper() {
         formData.append('auteurId', auteurId);
 
         try {
-            const response = await axios.post('/api/create-paper', formData, {
+            const response = await axios.post('http://127.0.0.1:8000/api/papers', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -65,4 +65,4 @@ function CreatePaper() {
     );
 }
 
-export default CreatePaper;
+export default StorePaper;

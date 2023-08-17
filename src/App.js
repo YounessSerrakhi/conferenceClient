@@ -9,16 +9,16 @@ import { AuthProvider } from './Contexts/AuthContext';
 function App() {
   return (
     <div className="App">
+    <ListSpeakers/>
       <BrowserRouter>
-      <AuthProvider>
-    <Routes>
-        <Route index element={<Home />} />
-        <Route path='login' element={<Login />} />
-        <Route path='register' element={<Register />} />
-    </Routes>
-      </AuthProvider>
+        <AuthProvider>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path='login' element={<Login />} />
+            <Route path='register' element={<Register />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
-
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-const UpdateActivity = ({ activityId }) => {
+const UpdateActivity = () => {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -10,12 +11,12 @@ const UpdateActivity = ({ activityId }) => {
     });
 
     const [presenters, setPresenters] = useState([]);
-
+    const { id } = useParams();
     useEffect(() => {
         // Fetch the activity data based on the activityId and populate the form
         const fetchActivityData = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/activities/${activityId}`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/activities/${id}`);
                 const activityData = response.data;
 
                 setFormData({
@@ -30,7 +31,7 @@ const UpdateActivity = ({ activityId }) => {
         };
 
         fetchActivityData();
-    }, [activityId]);
+    }, [id]);
 
     useEffect(() => {
         // Fetch the list of presenters (speakers) to populate the dropdown
@@ -63,7 +64,7 @@ const UpdateActivity = ({ activityId }) => {
         e.preventDefault();
 
         try {
-            const response = await axios.put(`http://127.0.0.1:8000/api/activities/${activityId}`, formData);
+            const response = await axios.put(`http://127.0.0.1:8000/api/activities/${id}`, formData);
             console.log('Response:', response.data);
         } catch (error) {
             console.error('Error updating activity:', error);

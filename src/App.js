@@ -1,16 +1,25 @@
 import './assets/css/main.css';
-import Header from './components/Header';
-import Main from './components/Main';
-import Footer from './components/Footer';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from './pages/Home';
+import Login from './pages/Auth/Login';
+import Register from './pages/Auth/Register';
+import { AuthProvider } from './Contexts/AuthContext';
+import ListSpeakers from './components/speaker/ListSpeakers';
 
 
 function App() {
   return (
     <div className="App">
-      <Header />
-
-      <Main />
-      <Footer />
+      <ListSpeakers />
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path='login' element={<Login />} />
+            <Route path='register' element={<Register />} />
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
     </div>
   );
 }

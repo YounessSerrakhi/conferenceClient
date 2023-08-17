@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function StorePaper() {
-    const [paper, setPaper] = useState({});
     const [resumerFile, setResumerFile] = useState(null);
     const [auteurId, setAuteurId] = useState(''); // Populate this based on your authentication logic
     const [pdfPath, setPdfPath] = useState('');
+    const { id } = useParams();
     useEffect(() => {
         // Fetch speaker data based on the speakerId and populate the form
         const fetchPaperData = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/papers/${paperId}`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/papers/${id}`);
                 const paperData = response.data;
                 setAuteurId(paperData.auteurId);
                 setPdfPath(paperData.pdfPath);

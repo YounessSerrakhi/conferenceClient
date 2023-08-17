@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link} from "react-router-dom";
-
 import { useAuth } from '../../Contexts/AuthContext';
 
 
@@ -13,7 +12,7 @@ function Register(){
   const [firstName, setFirstName] = useState('');
   const [name, setName] = useState('');
   const [password_confirmation, setPassword_confirmation] = useState('');
-  const api = useAuth();
+  const {api} = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();

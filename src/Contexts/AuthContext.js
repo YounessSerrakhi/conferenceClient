@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
     setIsAuthenticated(true);
     api.defaults.headers['Authorization'] = `Bearer ${Cookies.get('token')}`;
     api.get("api/user").then(response=>{
-      Cookies.set('userName', `${response.data.name}`, { expires: 7 });
+      Cookies.set('userName', `${response.data.nom} ${response.data.prenom}`, { expires: 7 });
       Cookies.set('userEmail', `${response.data.email}`, { expires: 7 });
       }).catch(error => {
       console.log(error);

@@ -34,7 +34,7 @@ const StoreSpeaker = () => {
         formDataToSend.append('image', formData.image);
 
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/upload', formDataToSend, {
+            const response = await axios.post('http://127.0.0.1:8000/api/speakers', formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

@@ -14,7 +14,7 @@ const StoreActivity = () => {
         // Fetch the list of presenters (speakers) to populate the dropdown
         const fetchPresenters = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/speakers'); // Adjust the endpoint as needed
+                const response = await axios.get('http://127.0.0.1:8000/api/activities'); // Adjust the endpoint as needed
                 const presentersData = response.data;
                 setPresenters(presentersData);
             } catch (error) {

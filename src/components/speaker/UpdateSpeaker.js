@@ -16,7 +16,7 @@ const UpdateSpeaker = () => {
         // Fetch speaker data based on the speakerId and populate the form
         const fetchSpeakerData = async () => {
             try {
-                const response = await axios.get(`/api/speakers/${id}`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/speakers/${id}`);
                 const speakerData = response.data;
 
                 setFormData({

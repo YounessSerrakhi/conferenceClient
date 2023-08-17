@@ -17,11 +17,15 @@ function App() {
             <Route index element={<Home />} />
             <Route path='login' element={<Login />} />
             <Route path='register' element={<Register />} />
-            <Route path='/editspeaker/id' element={<UpdateSpeaker/>}/>
-            <Route path='/editactivity/id' element={<UpdateActivity/>}/>
-            <Route path='/editspeaker/id' element={<UpdatePaper/>}/>
+            
           </Routes>
         </AuthProvider>
+
+        <Routes>
+        <Route path='/editspeaker/:id' element={<UpdateSpeaker/>}/>
+            <Route path='/editactivity/:id' element={<UpdateActivity/>}/>
+            <Route path='/editpaper/:id' element={<UpdatePaper/>}/>
+        </Routes>
       </BrowserRouter>
     </div>
   );

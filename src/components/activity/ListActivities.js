@@ -65,6 +65,7 @@ const ListActivities = () => {
                             <th>Description</th>
                             <th>Datetime</th>
                             <th>Presenter</th>
+                            <th>actions</th>
                         </tr>
                     </thead>
                     <tbody>

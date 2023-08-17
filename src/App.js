@@ -11,17 +11,16 @@ import ListSpeakers from './components/speaker/ListSpeakers';
 function App() {
   return (
     <div className="App">
-    <ListSpeakers/>
+      <ListSpeakers />
       <BrowserRouter>
-      <AuthProvider>
-    <Routes>
-        <Route index element={<Home />} />
-        <Route path='login' element={<Login />} />
-        <Route path='register' element={<Register />} />
-    </Routes>
-      </AuthProvider>
+        <AuthProvider>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path='login' element={<Login />} />
+            <Route path='register' element={<Register />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
-
     </div>
   );
 }

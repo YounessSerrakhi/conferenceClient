@@ -22,20 +22,22 @@ const Sidebar = () => {
                 <CDBSidebarContent className="sidebar-content">
                     <CDBSidebarMenu>
                         <NavLink exact to="/" activeClassName="activeClicked">
-                            <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
+                            <CDBSidebarMenuItem icon="chart-line">Dashboard</CDBSidebarMenuItem>
                         </NavLink>
-                        <NavLink exact to="/tables" activeClassName="activeClicked">
-                            <CDBSidebarMenuItem icon="table">users</CDBSidebarMenuItem>
+                        <NavLink exact to="/users" activeClassName="activeClicked">
+                            <CDBSidebarMenuItem icon="th">users</CDBSidebarMenuItem>
                         </NavLink>
                         <NavLink exact to="/speakers" activeClassName="activeClicked">
                             <CDBSidebarMenuItem icon="user">speakers</CDBSidebarMenuItem>
                         </NavLink>
-                        <NavLink exact to="/analytics" activeClassName="activeClicked">
-                            <CDBSidebarMenuItem icon="chart-line">papers</CDBSidebarMenuItem>
+                        <NavLink exact to="/papers" activeClassName="activeClicked">
+                            <CDBSidebarMenuItem icon="book">papers</CDBSidebarMenuItem>
                         </NavLink>
-
+                        <NavLink exact to="/activities" activeClassName="activeClicked">
+                            <CDBSidebarMenuItem icon="table">activities</CDBSidebarMenuItem>
+                        </NavLink>
                         <NavLink exact to="/hero404" target="_blank" activeClassName="activeClicked">
-                            <CDBSidebarMenuItem icon="exclamation-circle">analytics</CDBSidebarMenuItem>
+                            <CDBSidebarMenuItem icon="exclamation-circle">info</CDBSidebarMenuItem>
                         </NavLink>
                     </CDBSidebarMenu>
                 </CDBSidebarContent>

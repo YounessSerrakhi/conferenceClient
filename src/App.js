@@ -1,33 +1,16 @@
 import './assets/css/main.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from './pages/Home';
-import Login from './pages/Auth/Login';
-import Register from './pages/Auth/Register';
-import { AuthProvider } from './Contexts/AuthContext';
-import UpdateSpeaker from './components/speaker/UpdateSpeaker';
-import UpdateActivity from './components/activity/UpdateActivity';
-import UpdatePaper from './components/paper/UpdatePaper';
+import { AuthProvider, useAuth } from './Contexts/AuthContext';
+import AdminSide from './sides/AdminSide';
+import UserSide from './sides/UserSide';
+import Cookies from 'js-cookie';
+
+
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path='login' element={<Login />} />
-            <Route path='register' element={<Register />} />
-            
-          </Routes>
-        </AuthProvider>
-
-        <Routes>
-        <Route path='/editspeaker/:id' element={<UpdateSpeaker/>}/>
-            <Route path='/editactivity/:id' element={<UpdateActivity/>}/>
-            <Route path='/editpaper/:id' element={<UpdatePaper/>}/>
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <AuthProvider>
+      {Cookies.get('role')==='admin'?<AdminSide/>:<UserSide/>}
+    </AuthProvider>
   );
 }
 

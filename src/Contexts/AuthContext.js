@@ -28,6 +28,7 @@ export function AuthProvider({ children }) {
     api.get("api/user").then(response=>{
       Cookies.set('userName', `${response.data.nom} ${response.data.prenom}`, { expires: 7 });
       Cookies.set('userEmail', `${response.data.email}`, { expires: 7 });
+      Cookies.set('role', `${response.data.userType}`, { expires: 7 });
       }).catch(error => {
       console.log(error);
     });
@@ -36,6 +37,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setIsAuthenticated(false);
     Cookies.remove('token');
+    Cookies.set('role', 'user', { expires: 7 });
 
   };
 

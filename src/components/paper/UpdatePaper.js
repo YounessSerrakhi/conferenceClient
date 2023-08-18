@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-function StorePaper() {
+function UpdatePaper() {
     const [resumerFile, setResumerFile] = useState(null);
     const [auteurId, setAuteurId] = useState(''); // Populate this based on your authentication logic
     const [pdfPath, setPdfPath] = useState('');
@@ -83,4 +83,4 @@ function StorePaper() {
     );
 }
 
-export default StorePaper;
+export default UpdatePaper;

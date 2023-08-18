@@ -9,7 +9,7 @@ import Cookies from 'js-cookie';
 function App() {
   return (
     <AuthProvider>
-      {Cookies.get('role')==='admin'?<AdminSide/>:<UserSide/>}
+      {Cookies.get('role') === 'admin' ? <AdminSide /> : <AdminSide />}
     </AuthProvider>
   );
 }

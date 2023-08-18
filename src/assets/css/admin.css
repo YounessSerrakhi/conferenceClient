@@ -1,0 +1,11 @@
+.parentDiv {
+    display: flex;
+    /* Use flexbox to place children in a row */
+}
+
+.childDiv {
+    flex: 1;
+    /* Distribute available space equally between children */
+    border: 1px solid gray;
+    padding: 10px;
+}

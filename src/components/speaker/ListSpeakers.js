@@ -57,7 +57,7 @@ const ListSpeakers = () => {
     }
 
     return (
-        <div>
+        <div className="childDiv">
             <h2>List of Speakers</h2>
             <div>
                 <table>

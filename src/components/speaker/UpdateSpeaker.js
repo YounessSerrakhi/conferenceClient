@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-const UpdateSpeaker = ({ speakerId }) => {
+const UpdateSpeaker = () => {
     const [formData, setFormData] = useState({
         firstname: '',
         lastname: '',
@@ -9,11 +10,13 @@ const UpdateSpeaker = ({ speakerId }) => {
         image: null,
     });
 
+    const { id } = useParams();
+
     useEffect(() => {
         // Fetch speaker data based on the speakerId and populate the form
         const fetchSpeakerData = async () => {
             try {
-                const response = await axios.get(`/api/speakers/${speakerId}`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/speakers/${id}`);
                 const speakerData = response.data;
 
                 setFormData({
@@ -28,7 +31,7 @@ const UpdateSpeaker = ({ speakerId }) => {
         };
 
         fetchSpeakerData();
-    }, [speakerId]);
+    }, [id]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -55,7 +58,7 @@ const UpdateSpeaker = ({ speakerId }) => {
         formDataToSend.append('image', formData.image);
 
         try {
-            const response = await axios.put(`/api/speakers/${speakerId}`, formDataToSend, {
+            const response = await axios.put(`http://127.0.0.1:8000/api/speakers/${id}`, formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

@@ -1,18 +1,15 @@
-import './assets/css/main.css';
-import Header from './components/Header';
-import Main from './components/Main';
-import Footer from './components/Footer';
-import StoreSpeaker from './components/speaker/StoreSpeaker';
-import ListSpeakers from './components/speaker/ListSpeakers';
+import { AuthProvider} from './Contexts/AuthContext';
+import AdminSide from './sides/AdminSide';
+import UserSide from './sides/UserSide';
+import Cookies from 'js-cookie';
+
+
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <ListSpeakers/>
-      <Main />
-      <Footer />
-    </div>
+    <AuthProvider>
+      {Cookies.get('role')==='admin'?<AdminSide/>:<UserSide/>}
+    </AuthProvider>
   );
 }
 

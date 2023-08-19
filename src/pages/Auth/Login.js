@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Link} from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
+
 import { useAuth } from '../../Contexts/AuthContext';
 import Cookies from 'js-cookie';
 
@@ -9,6 +10,8 @@ function Login() {
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const {login,api} = useAuth();
+const navigate = useNavigate();
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -26,6 +29,7 @@ const {login,api} = useAuth();
         alert(response.data.message);
         setEmail("");
         setPassword("");
+        navigate('/');
       })
       .catch(error => {
         console.log(error);

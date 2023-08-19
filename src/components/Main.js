@@ -2,7 +2,6 @@ import React from 'react'
 import Header from './main/Header'
 import Program from './main/Program'
 import Footer from './main/Footer'
-import StoreActivity from './activity/StoreActivity'
 import Contact from './Contact'
 
 export default function Main() {

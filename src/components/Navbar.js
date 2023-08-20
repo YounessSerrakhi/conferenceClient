@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Dropdown } from 'react-bootstrap';
-import { Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Cookies from 'js-cookie';
 import '../assets/css/main.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useAuth } from '../Contexts/AuthContext';
 
 export default function Navbar() {
@@ -28,6 +25,9 @@ export default function Navbar() {
 
 
   const {logout,api} = useAuth();
+  const navigate = useNavigate();
+
+
   const handleLogout =(event) => {
     event.preventDefault();
     api.defaults.headers['Authorization'] = `Bearer ${Cookies.get('token')}`;
@@ -35,6 +35,7 @@ export default function Navbar() {
       console.log(response);
       logout();
       alert(response.data.message);
+      navigate('/');
     });
   };
 
@@ -59,69 +60,69 @@ export default function Navbar() {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto">
           <li className="nav-item">
-            <a className="nav-link" href="#!">
-              Offer
-            </a>
+            <Link className="nav-link" to="/">
+              conference
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#!">
-              Features
-            </a>
+            <Link className="nav-link" to="/">
+            programme
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#!">
-              Portfolio
-            </a>
+            <Link className="nav-link" to="/">
+            Speakers
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#!">
-              Reference
-            </a>
+            <Link className="nav-link" to="/">
+            Reference
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#!">
-              About
-            </a>
+            <Link className="nav-link" to="/">
+            Contact
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#!">
-              Team
-            </a>
+            <Link className="nav-link" to="/">
+            Team
+            </Link>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#!">
-              Contact
-            </a>
-          </li>
+          
         </ul>
         <ul className="navbar-nav d-flex flex-row">
-        {!(Cookies.get('token')!==undefined) && ( // Render login and register links if not authenticated
-              <>
-                <li className="nav-item">
-                  <Link to='/login' className="nav-link" >
-                    Login
-                  </Link>
-                </li>
-                <li className="nav-item">
-                <Link to='/register' className="nav-link" >
-                    Register
-                  </Link>
-                </li>
-              </>
-            )}
-            {(Cookies.get('token')!==undefined) && (
-              <>
-              <Dropdown>
-              <Dropdown.Toggle variant="outline-secondary" id="dropdownMenuButton">
-                {Cookies.get('userName')}
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="form">
-                  <a href="http://127.0.0.1:8000/logout" onClick={handleLogout}>Logout</a>
-              </Dropdown.Menu>
-            </Dropdown>
-            </>
-            )}
-        </ul>
+  {/* Check if token is here */}
+  {Cookies.get('token') === undefined ? ( // If token is not set
+    <>
+      <li className="nav-item">
+        <Link to="/login" className="nav-link">
+          Login
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link to="/register" className="nav-link">
+          Register
+        </Link>
+      </li>
+    </>
+  ) : (
+    // If token is set
+    <>
+      <li className="nav-item">
+        <Link to="/profile" className="nav-link">
+          {Cookies.get('userName')}
+        </Link>
+      </li>
+      <li className="nav-item">
+        <button className="nav-link" onClick={handleLogout}>
+          Logout
+
+        </button>
+      </li>
+    </>
+  )}
+</ul>
       </div>
     </div>
   </nav>

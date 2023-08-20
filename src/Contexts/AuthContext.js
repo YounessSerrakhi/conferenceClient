@@ -26,9 +26,9 @@ export function AuthProvider({ children }) {
     setIsAuthenticated(true);
     api.defaults.headers['Authorization'] = `Bearer ${Cookies.get('token')}`;
     api.get("api/user").then(response=>{
-      Cookies.set('userName', `${response.data.nom} ${response.data.prenom}`, { expires: 7 });
-      Cookies.set('userEmail', `${response.data.email}`, { expires: 7 });
-      Cookies.set('role', `${response.data.userType}`, { expires: 7 });
+      Cookies.set('userName', `${response.data.userData.nom} ${response.data.userData.prenom}`, { expires: 7 });
+      Cookies.set('userEmail', `${response.data.userData.email}`, { expires: 7 });
+      Cookies.set('role', `${response.data.userData.userType}`, { expires: 7 });
       }).catch(error => {
       console.log(error);
     });
@@ -38,6 +38,8 @@ export function AuthProvider({ children }) {
     setIsAuthenticated(false);
     Cookies.remove('token');
     Cookies.set('role', 'user', { expires: 7 });
+    Cookies.remove('userName');
+      Cookies.remove('userEmail');
 
   };
 

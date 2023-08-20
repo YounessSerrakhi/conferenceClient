@@ -1,8 +1,7 @@
 import React from 'react'
 
 export default function Contact() {
-  return (
-    
+  return (  
 <div class="container medium">
 					<header class="major last">
 						<h2>Questions or comments?</h2>

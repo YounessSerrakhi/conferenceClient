@@ -13,7 +13,7 @@ const ListSpeakers = () => {
     const records = speakers.slice(firstIndex, lastIndex);
     const npage = Math.ceil(speakers.length / recordsPerPage);
     const numbers = [...Array(npage + 1).keys()].slice(1);
-
+    const [search, setSearch] = useState('');
     function prevPage() {
         if (currentPage !== firstIndex) {
             setCurrentPage(currentPage - 1);
@@ -88,6 +88,11 @@ const ListSpeakers = () => {
                 </Link>
             </div>
             <h2>List of Speakers</h2>
+            <div>
+                <form>
+                    <input placeholder='Search By Lastname...' type="text" className='form-control' onChange={(e) => setSearch(e.target.value)} />
+                </form>
+            </div>
             <div className='m-2'>
                 <table className="table table-striped">
                     <thead>
@@ -101,7 +106,10 @@ const ListSpeakers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {records.map((speaker) => (
+                        {records.filter((item) => {
+                            return search.toLowerCase() === '' ? item :
+                                item.lastname.toLowerCase().includes(search.toLowerCase());
+                        }).map((speaker) => (
                             <tr key={speaker.id}>
                                 <td>{speaker.id}</td>
                                 <td>{`${speaker.firstname} ${speaker.lastname}`}</td>

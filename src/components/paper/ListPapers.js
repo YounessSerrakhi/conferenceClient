@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import img from '../../images/pdf.png';
 import { Link, useNavigate } from 'react-router-dom';
 function ListPapers() {
     const [papers, setPapers] = useState([]);
@@ -12,7 +13,7 @@ function ListPapers() {
     const records = papers.slice(firstIndex, lastIndex);
     const npage = Math.ceil(papers.length / recordsPerPage);
     const numbers = [...Array(npage + 1).keys()].slice(1);
-
+    const [search, setSearch] = useState('');
     function prevPage() {
         if (currentPage !== firstIndex) {
             setCurrentPage(currentPage - 1);
@@ -79,28 +80,33 @@ function ListPapers() {
                 </Link>
             </div>
             <h2>List of Papers</h2>
+            <div>
+                <form>
+                    <input placeholder='Search By Auteur Name...' type="text" className='form-control' onChange={(e) => setSearch(e.target.value)} />
+                </form>
+            </div>
             <div className='m-1'>
                 <table className="table table-striped">
                     <thead>
                         <tr>
                             <th><b>ID</b></th>
+                            <th><b>Auteur</b></th>
                             <th><b>Resumer</b></th>
                             <th><b>status</b></th>
                             <th><b>Actions</b></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {records.map(paper => (
+                        {records.filter((item) => {
+                            return search.toLowerCase() === '' ? item :
+                                item.auteurName.toLowerCase().includes(search.toLowerCase());
+                        }).map(paper => (
                             <tr key={paper.id}>
                                 <td>{paper.id}</td>
+                                <td>{paper.auteurName}</td>
                                 <td>
-                                    <a style={{ borderRadius: "8px", border: "1px solid #000", padding: '5px', color: '#000' }} href={`http://127.0.0.1:8000/storage/${paper.resumer}`}>
-                                        <svg style={{ color: "red" }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-fill" viewBox="0 0 16 16">
-                                            <path d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3z" />
-                                        </svg>
-                                        <span style={{ padding: '5px' }}>
-                                            <b>Check File</b>
-                                        </span>
+                                    <a href={`http://127.0.0.1:8000/storage/${paper.resumer}`}>
+                                        <img height={'50px'} width={'40px'} src={img} alt={paper.id} />
                                     </a>
                                 </td>
                                 <td>{paper.status}</td>
@@ -144,7 +150,7 @@ function ListPapers() {
                     </ul>
                 </nav>
             </div>
-        </div>
+        </div >
     );
 }
 

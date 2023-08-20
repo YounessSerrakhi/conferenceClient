@@ -10,7 +10,7 @@ function ListUsers() {
     const records = users.slice(firstIndex, lastIndex);
     const npage = Math.ceil(users.length / recordsPerPage);
     const numbers = [...Array(npage + 1).keys()].slice(1);
-
+    const [search, setSearch] = useState('');
     function prevPage() {
         if (currentPage !== firstIndex) {
             setCurrentPage(currentPage - 1);
@@ -36,6 +36,11 @@ function ListUsers() {
     return (
         <div className='childDiv'>
             <h2>User List</h2>
+            <div>
+                <form>
+                    <input placeholder='Search By Lastname...' type="text" className='form-control' onChange={(e) => setSearch(e.target.value)} />
+                </form>
+            </div>
             <div className='m-2'>
                 <table className="table table-striped">
                     <thead>
@@ -47,7 +52,10 @@ function ListUsers() {
                         </tr>
                     </thead>
                     <tbody>
-                        {records.map(user => (
+                        {records.filter((item) => {
+                            return search.toLowerCase() === '' ? item :
+                                item.nom.toLowerCase().includes(search.toLowerCase());
+                        }).map(user => (
                             <tr key={user.id}>
                                 <td>{user.id}</td>
                                 <td>{user.nom} {user.prenom}</td>

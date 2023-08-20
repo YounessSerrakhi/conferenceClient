@@ -13,7 +13,7 @@ const ListActivities = () => {
     const records = activities.slice(firstIndex, lastIndex);
     const npage = Math.ceil(activities.length / recordsPerPage);
     const numbers = [...Array(npage + 1).keys()].slice(1);
-
+    const [search, setSearch] = useState('');
     function prevPage() {
         if (currentPage !== firstIndex) {
             setCurrentPage(currentPage - 1);
@@ -88,6 +88,11 @@ const ListActivities = () => {
                 </Link>
             </div>
             <h2>List of Activities</h2>
+            <div>
+                <form>
+                    <input placeholder='Search By Lastname...' type="text" className='form-control' onChange={(e) => setSearch(e.target.value)} />
+                </form>
+            </div>
             <div className='m-1'>
                 <table className="table table-striped">
                     <thead>
@@ -101,7 +106,10 @@ const ListActivities = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {records.map((activity) => (
+                        {records.filter((item) => {
+                            return search.toLowerCase() === '' ? item :
+                                item.presenterName.toLowerCase().includes(search.toLowerCase());
+                        }).map((activity) => (
                             <tr key={activity.id}>
                                 <td scope="row"> {activity.id} </td>
                                 <td> {activity.title}</td>

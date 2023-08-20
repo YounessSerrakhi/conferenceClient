@@ -41,7 +41,7 @@ function StorePaper() {
             },
         }).then(response => {
             console.log(response.data);
-            navigate('papers');
+            navigate('/papers');
         })
             .catch(error => {
                 console.error('Error uploding paper', error);

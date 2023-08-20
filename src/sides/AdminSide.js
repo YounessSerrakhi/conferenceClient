@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import '../assets/css/admin.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import AdminHome from '../pages/AdminHome';
 import Sidebar from '../components/admin/Sidebar';
 import ListSpeakers from '../components/speaker/ListSpeakers';
@@ -12,6 +13,7 @@ import UpdatePaper from '../components/paper/UpdatePaper';
 import StoreActivity from '../components/activity/StoreActivity';
 import ListActivities from '../components/activity/ListActivities';
 import UpdateActivity from '../components/activity/UpdateActivity';
+import ListUsers from '../components/user/ListUsers';
 
 export default function AdminSide() {
   return (
@@ -31,6 +33,7 @@ export default function AdminSide() {
           <Route path="/activities" element={<ListActivities />} />
           <Route path="/activity/create" element={<StoreActivity />} />
           <Route path="/activity/update/:id" element={<UpdateActivity />} />
+          <Route path="/users" element={<ListUsers />} />
         </Routes>
       </Router>
     </div>

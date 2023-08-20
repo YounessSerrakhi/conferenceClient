@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const StoreActivity = () => {
     const [presenters, setPresenters] = useState([])
@@ -9,7 +10,7 @@ const StoreActivity = () => {
         time: '', // Use datetime for the date and time input
         presenterId: '',
     });
-
+    const navigate = useNavigate();
     useEffect(() => {
         // Fetch the list of presenters (speakers) to populate the dropdown
         const fetchPresenters = async () => {
@@ -39,45 +40,50 @@ const StoreActivity = () => {
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/activities', formData);
             console.log('Response:', response.data);
+            navigate('/activities');
         } catch (error) {
             console.error('Error storing activity:', error);
         }
     };
 
     return (
-        <div>
+        <div className='childDiv'>
             <h2>Store Activity</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className='form-group mb-2'>
                     <label>Title:</label>
                     <input
                         type="text"
                         name="title"
+                        className='form-control'
                         value={formData.title}
                         onChange={handleInputChange}
                     />
                 </div>
-                <div>
+                <div className='form-group mb-2'>
                     <label>Description:</label>
                     <textarea
                         name="description"
+                        className='form-control'
                         value={formData.description}
                         onChange={handleInputChange}
                     />
                 </div>
-                <div>
-                    <label>Datetime:</label>
+                <div className='form-group mb-2'>
+                    <label>Time:</label>
                     <input
                         type="time" // Use datetime-local for date and time input
                         name="time"
+                        className='form-control'
                         value={formData.datetime}
                         onChange={handleInputChange}
                     />
                 </div>
-                <div>
+                <div className='form-group mb-2'>
                     <label>Presenter:</label>
                     <select
                         name="presenterId"
+                        className='form-control'
                         value={formData.presenterId}
                         onChange={handleInputChange}
                     >
@@ -89,7 +95,8 @@ const StoreActivity = () => {
                         ))}
                     </select>
                 </div>
-                <button type="submit">Store</button>
+                <button className='btn btn-dark m-1' type="submit">Store</button>
+                <button className='btn btn-danger m-1' type="reset">Reset</button>
             </form>
         </div>
     );

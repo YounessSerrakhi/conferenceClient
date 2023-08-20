@@ -1,65 +1,96 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function StorePaper() {
     const [resumerFile, setResumerFile] = useState(null);
     const [auteurId, setAuteurId] = useState(''); // Populate this based on your authentication logic
-
+    const [status, setStatus] = useState('');
+    const [users, setUsers] = useState([]);
+    const navigate = useNavigate();
     const handleResumerChange = (event) => {
         const file = event.target.files[0];
         setResumerFile(file);
     };
+
+    useEffect(() => {
+        axios.get('http://127.0.0.1:8000/api/users')
+            .then(response => setUsers(response.data))
+            .catch(error => console.error('Error fetching users:', error));
+    }, []);
+
+    const handleSelectChange = (event) => {
+        setStatus(event.target.value);
+    };
+
+    const handleAuteurId = (event) => {
+        setAuteurId(event.target.value);
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         const formData = new FormData();
         formData.append('resumer', resumerFile);
+        formData.append('status', status);
         formData.append('auteurId', auteurId);
 
-        try {
-            const response = await axios.post('http://127.0.0.1:8000/api/papers', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+        axios.post('http://127.0.0.1:8000/api/papers', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        }).then(response => {
+            console.log(response.data);
+            navigate('papers');
+        })
+            .catch(error => {
+                console.error('Error uploding paper', error);
             });
 
-            if (response.status === 201) {
-                // Paper created successfully, handle accordingly
-                console.log('Paper created successfully');
-            } else {
-                // Handle error case
-                console.error('Error creating paper');
-            }
-        } catch (error) {
-            // Handle network error
-            console.error('Network error', error);
-        }
     };
 
+
+
     return (
-        <div>
+        <div className='childDiv'>
             <h2>Create Paper</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className='form-group mb-2'>
                     <label htmlFor="resumer">Resumer (PDF)</label>
                     <input
                         type="file"
+                        className='form-control'
                         id="resumer"
                         accept=".pdf"
                         onChange={handleResumerChange}
                     />
                 </div>
-                <div>
-                    <label htmlFor="auteurId">Auteur ID</label>
-                    <input
-                        type="text"
-                        id="auteurId"
-                        value={auteurId}
-                        onChange={(event) => setAuteurId(event.target.value)}
-                    />
+                <div className='form-group mb-2'>
+                    <label>Status:</label>
+                    <select className='form-control' value={status} onChange={handleSelectChange}>
+                        <option value="">Select a Status</option>
+                        <option value="accepted">accepted</option>
+                        <option value="refuesed">refuesed</option>
+                    </select>
                 </div>
-                <button type="submit">Create Paper</button>
+                <div className='form-group mb-2'>
+                    <label>Auteur:</label>
+                    <select
+                        className='form-control'
+                        name="auteurId"
+                        value={auteurId}
+                        onChange={handleAuteurId}
+                    >
+                        <option value="">Select Auteur</option>
+                        {users.map((user) => (
+                            <option key={user.id} value={user.id}>
+                                {user.nom} {user.prenom}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <button className='btn btn-dark m-1' type="submit">save</button>
+                <button className='btn btn-danger m-1' type="reset">reset</button>
             </form>
         </div>
     );

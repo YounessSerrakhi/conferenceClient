@@ -6,7 +6,7 @@ const UpdateActivity = () => {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        datetime: '',
+        time: '',
         presenterId: '',
     });
 
@@ -22,7 +22,7 @@ const UpdateActivity = () => {
                 setFormData({
                     title: activityData.title,
                     description: activityData.description,
-                    datetime: activityData.datetime,
+                    time: activityData.time,
                     presenterId: activityData.presenterId,
                 });
             } catch (error) {
@@ -72,39 +72,43 @@ const UpdateActivity = () => {
     };
 
     return (
-        <div>
+        <div className='childDiv'>
             <h2>Update Activity</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className='form-group mb-2'>
                     <label>Title:</label>
                     <input
                         type="text"
                         name="title"
+                        className='form-control'
                         value={formData.title}
                         onChange={handleInputChange}
                     />
                 </div>
-                <div>
+                <div className='form-group mb-2'>
                     <label>Description:</label>
                     <textarea
                         name="description"
+                        className='form-control'
                         value={formData.description}
                         onChange={handleInputChange}
                     />
                 </div>
-                <div>
-                    <label>Datetime:</label>
+                <div className='form-group mb-2'>
+                    <label>Time:</label>
                     <input
-                        type="datetime-local" // Use datetime-local for date and time input
-                        name="datetime"
-                        value={formData.datetime}
+                        type="time" // Use datetime-local for date and time input
+                        name="time"
+                        className='form-control'
+                        value={formData.time}
                         onChange={handleInputChange}
                     />
                 </div>
-                <div>
+                <div className='form-group mb-2'>
                     <label>Presenter:</label>
                     <select
                         name="presenterId"
+                        className='form-control'
                         value={formData.presenterId}
                         onChange={handleInputChange}
                     >
@@ -116,7 +120,8 @@ const UpdateActivity = () => {
                         ))}
                     </select>
                 </div>
-                <button type="submit">Update</button>
+                <button className='btn btn-dark m-1' type="submit">Update</button>
+                <button className='btn btn-danger m-1' type="reset">Reset</button>
             </form>
         </div>
     );

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const StoreSpeaker = () => {
     const [formData, setFormData] = useState({
         firstname: '',
         lastname: '',
+        subject: '',
         bio: '',
-        image: null, // This will store the selected image file
+        image: null,
     });
-
+    const navigate = useNavigate();
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -30,6 +32,7 @@ const StoreSpeaker = () => {
         const formDataToSend = new FormData();
         formDataToSend.append('firstname', formData.firstname);
         formDataToSend.append('lastname', formData.lastname);
+        formDataToSend.append('subject', formData.subject);
         formDataToSend.append('bio', formData.bio);
         formDataToSend.append('image', formData.image);
 
@@ -41,42 +44,63 @@ const StoreSpeaker = () => {
             });
 
             console.log('Response:', response.data);
+            setFormData({
+                firstname: '',
+                lastname: '',
+                subject: '',
+                bio: '',
+                image: null,
+            });
+            navigate('/speakers');
         } catch (error) {
             console.error('Error uploading data:', error);
         }
     };
 
     return (
-        <div>
+        <div className='childDiv'>
             <h2>Upload Data</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className='form-group mb-2'>
                     <label>First Name:</label>
                     <input
                         type="text"
+                        className='form-control'
                         name="firstname"
                         value={formData.firstname}
                         onChange={handleInputChange}
                     />
                 </div>
-                <div>
+                <div className='form-group mb-2'>
                     <label>Last Name:</label>
                     <input
                         type="text"
+                        className='form-control'
                         name="lastname"
                         value={formData.lastname}
                         onChange={handleInputChange}
                     />
                 </div>
-                <div>
+                <div className='form-group mb-2'>
+                    <label>subject:</label>
+                    <input
+                        type="text"
+                        className='form-control'
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <div className='form-group mb-2'>
                     <label>Bio:</label>
-                    <textarea name="bio" value={formData.bio} onChange={handleInputChange} />
+                    <textarea className='form-control' name="bio" value={formData.bio} onChange={handleInputChange} />
                 </div>
-                <div>
+                <div className='form-group mb-2'>
                     <label>Image:</label>
-                    <input type="file" name="image" onChange={handleImageChange} />
+                    <input className='form-control' type="file" name="image" onChange={handleImageChange} />
                 </div>
-                <button type="submit">Upload</button>
+                <button className='btn btn-dark m-1' type="submit">save</button>
+                <button className='btn btn-danger m-1' type="reset">reset</button>
             </form>
         </div>
     );

@@ -14,12 +14,15 @@ import StoreActivity from '../components/activity/StoreActivity';
 import ListActivities from '../components/activity/ListActivities';
 import UpdateActivity from '../components/activity/UpdateActivity';
 import ListUsers from '../components/user/ListUsers';
+import Navbar from '../components/admin/Navbar';
 import ListMessages from '../components/admin/ListMessages';
 
 export default function AdminSide() {
   return (
-    <div className="parentDiv">
+    <div>
       <Router>
+        <Navbar/>
+        <div className="parentDiv">
         <Sidebar className="childDiv" />
         <Routes>
           <Route path="/" element={<AdminHome />}>
@@ -37,6 +40,7 @@ export default function AdminSide() {
           <Route path="/users" element={<ListUsers />} />
           <Route path="/messages" element={<ListMessages/>} />
         </Routes>
+        </div>
       </Router>
     </div>
   )

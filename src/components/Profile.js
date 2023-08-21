@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.js';
-import '../assets/css/profile.css';
 import { useAuth } from '../Contexts/AuthContext';
 import Cookies from 'js-cookie';
 

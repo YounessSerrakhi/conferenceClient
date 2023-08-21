@@ -81,6 +81,7 @@ input, select, textarea {
 		box-sizing: border-box;
 	}
 
+	
 	*, *:before, *:after {
 		box-sizing: inherit;
 	}
@@ -118,7 +119,7 @@ input, select, textarea {
 		-ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 		border-bottom: dotted 1px;
-		color: #4eb980;
+		color:#0e1ec0;
 		text-decoration: none;
 	}
 
@@ -2110,7 +2111,7 @@ input, select, textarea {
 		select:focus,
 		textarea:focus {
 			background: rgba(224, 224, 224, 0.15);
-			border-color: #4eb980;
+			border-color: #0e1ec0;
 		}
 
 	input[type="text"],
@@ -2746,7 +2747,7 @@ input, select, textarea {
 
 			#header a:hover {
 				border-bottom-color: transparent;
-				color: #4eb980;
+				color: #0e1ec0;
 			}
 
 		#header strong, #header b {
@@ -2766,7 +2767,7 @@ input, select, textarea {
 		}
 
 		#header .logo {
-			background: #4eb980;
+			background: #0e1ec0;
 			border-radius: 100%;
 			color: #ffffff;
 			cursor: default;
@@ -2799,7 +2800,7 @@ input, select, textarea {
 
 	#footer {
 		background-attachment: scroll;
-		background-color: #4eb980;
+		background-color: #0e1ec0;
 		background-image: url("images/bottom-3200.svg");
 		background-position: top center;
 		background-repeat: repeat-x;
@@ -2848,7 +2849,7 @@ input, select, textarea {
 		#footer .button {
 			background: #ffffff;
 			box-shadow: inset 0 0 0 1px #ffffff;
-			color: #4eb980;
+			color: #0e1ec0;
 		}
 
 			#footer input[type="submit"]:hover,
@@ -3049,7 +3050,6 @@ input, select, textarea {
 			#footer {
 				background-image: url("images/bottom-1600.svg");
 				background-size: 1600px 230px;
-				margin-top: -100px;
 				padding: calc(230px + 4em) 0 6em 0;
 			}
 
@@ -3205,7 +3205,6 @@ input, select, textarea {
 			#footer {
 				background-image: url("images/bottom-1280.svg");
 				background-size: 1280px 184px;
-				margin-top: -75px;
 				padding: calc(184px + 2em) 0 2em 0;
 			}
 
@@ -3277,7 +3276,6 @@ input, select, textarea {
 		/* Footer */
 
 			#footer {
-				margin-top: -100px;
 				padding-left: 1em;
 				padding-right: 1em;
 			}
@@ -3304,3 +3302,95 @@ input, select, textarea {
 				
 
 	}
+
+
+	/* Navbar */
+
+	#navbar a {
+		border-bottom-color: rgba(255, 255, 255, 0.35);
+		color: rgba(255, 255, 255, 0.8);
+	}
+
+		#navbar a:hover {
+			border-bottom-color: transparent;
+			color: #0e1ec0;
+		}
+
+/*Profile*/
+		
+.wrapper{
+    padding: 30px 50px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    margin: 5rem auto;
+    max-width: 600px;
+}
+.out{
+	background: rgba(224, 224, 224, 0.75);}
+.img{
+    width: 70px;
+    height: 70px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+#img-section p,#deactivate p{
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 10px;
+    text-align: justify;
+}
+#img-section b,#img-section button,#deactivate b{
+    font-size: 14px; 
+}
+
+label{
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #777;
+    padding-left: 3px;
+}
+
+.form-control{
+    border-radius: 10px;
+}
+
+input[placeholder]{
+    font-weight: 500;
+}
+.form-control:focus{
+    box-shadow: none;
+    border: 1.5px solid #0779e4;
+}
+select{
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    height: 40px;
+    padding: 5px 10px;
+    /* -webkit-appearance: none; */
+}
+
+select:focus{
+    outline: none;
+}
+.button{
+    background-color: #fff;
+    color: #0779e4;
+}
+.button:hover{
+    background-color: #0779e4;
+    color: #fff;
+}
+.btn-primary{
+    background-color: #0779e4;
+}
+@media(max-width:576px){
+    .wrapper{
+        padding: 25px 20px;
+    }
+    #deactivate{
+        line-height: 18px;
+    }
+}

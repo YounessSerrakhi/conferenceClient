@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Link,useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import { useAuth } from '../../Contexts/AuthContext';
 import Cookies from 'js-cookie';
@@ -10,7 +10,6 @@ function Login() {
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const {login,api} = useAuth();
-const navigate = useNavigate();
 
 
   const handleSubmit = async (event) => {
@@ -29,7 +28,6 @@ const navigate = useNavigate();
         alert(response.data.message);
         setEmail("");
         setPassword("");
-        navigate('/');
       })
       .catch(error => {
         console.log(error);
@@ -44,6 +42,9 @@ const navigate = useNavigate();
   return (
     <div className="wrapper my-5 d-flex flex-column w-50">
   <form onSubmit={handleSubmit}>
+  <div className="text-center mb-3">
+      <h4>Identification</h4>
+    </div>
     <div className="mb-4">
       <label htmlFor="email" className="form-label">Email addresse</label>
       <input

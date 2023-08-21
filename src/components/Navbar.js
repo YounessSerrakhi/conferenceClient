@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link,useNavigate} from 'react-router-dom';
 import Cookies from 'js-cookie';
 import '../assets/css/main.css'
 import { useAuth } from '../Contexts/AuthContext';
@@ -28,19 +28,14 @@ export default function Navbar() {
 
 
 
-  const {logout,api} = useAuth();
+  const {logout} = useAuth();
   const navigate = useNavigate();
 
 
   const handleLogout =(event) => {
-    event.preventDefault();
-    api.defaults.headers['Authorization'] = `Bearer ${Cookies.get('token')}`;
-    api.post('api/logout').then(response => {
-      console.log(response);
-      logout();
-      alert(response.data.message);
+    event.preventDefault();  
+      logout(event);
       navigate('/');
-    });
   };
 
   return (

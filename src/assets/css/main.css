@@ -3394,3 +3394,12 @@ select:focus{
         line-height: 18px;
     }
 }
+
+/*messages*/
+
+#unseen-message {
+    background-color: red;
+}
+#seen-message {
+    background-color: green;
+}

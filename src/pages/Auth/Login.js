@@ -42,7 +42,7 @@ const navigate = useNavigate();
  
 
   return (
-    <div className="container p-3 my-5 d-flex flex-column w-50">
+    <div className="wrapper my-5 d-flex flex-column w-50">
   <form onSubmit={handleSubmit}>
     <div className="mb-4">
       <label htmlFor="email" className="form-label">Email addresse</label>

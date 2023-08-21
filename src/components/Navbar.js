@@ -13,11 +13,15 @@ export default function Navbar() {
   };
 
   useEffect(() => {
+    if(window.location.pathname === '/'){
     window.addEventListener('scroll', handleScroll);
+    }
+    else {setTransparance(1);}
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      setTransparance(0)
     };
-  }, []);
+  }, [window.location.pathname]);
   const myStyle = {
     backgroundColor: `rgba(0, 0, 0, ${transparence})`
   };
@@ -40,11 +44,12 @@ export default function Navbar() {
   };
 
   return (
+    <div id="navbar">
     <nav className="navbar navbar-expand-lg navbar-light fixed-top shadow-0" style={myStyle}>
     <div className="container">
       <a className="navbar-brand" href="#!">
-        <span style={{ color: '#5e9693' }}>Psycho</span>
-        <span style={{ color: '#fff' }}>logist</span>
+        <span style={{ color: '#5e9693' }}>FSTg</span>
+        <span style={{ color: '#fff' }}>   Conference</span>
       </a>
       <button
         className="navbar-toggler"
@@ -115,10 +120,10 @@ export default function Navbar() {
         </Link>
       </li>
       <li className="nav-item">
-        <button className="nav-link" onClick={handleLogout}>
+        <Link to="#" className="nav-link" onClick={handleLogout}>
           Logout
 
-        </button>
+        </Link>
       </li>
     </>
   )}
@@ -126,5 +131,6 @@ export default function Navbar() {
       </div>
     </div>
   </nav>
+  </div>
   )
 }

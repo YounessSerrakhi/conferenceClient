@@ -14,6 +14,7 @@ import StoreActivity from '../components/activity/StoreActivity';
 import ListActivities from '../components/activity/ListActivities';
 import UpdateActivity from '../components/activity/UpdateActivity';
 import ListUsers from '../components/user/ListUsers';
+import ListMessages from '../components/admin/ListMessages';
 
 export default function AdminSide() {
   return (
@@ -34,6 +35,7 @@ export default function AdminSide() {
           <Route path="/activity/create" element={<StoreActivity />} />
           <Route path="/activity/update/:id" element={<UpdateActivity />} />
           <Route path="/users" element={<ListUsers />} />
+          <Route path="/messages" element={<ListMessages/>} />
         </Routes>
       </Router>
     </div>

@@ -7,11 +7,25 @@ import {
     CDBSidebarMenu,
     CDBSidebarMenuItem,
 } from 'cdbreact';
-import { NavLink } from 'react-router-dom';
+import { NavLink,Link,useNavigate} from 'react-router-dom';
+import { useAuth } from '../../Contexts/AuthContext';
+
+
 
 const Sidebar = () => {
+
+    const {logout} = useAuth();
+    
+  const navigate = useNavigate();
+    const handleLogout =(event) => {
+        event.preventDefault();
+          logout();
+          navigate('/');
+      };
+      
+
     return (
-        <div style={{ display: 'flex', height: '150vh', overflow: 'scroll initial', backgroundColor: '#333' }}>
+        <div style={{ display: 'flex',height: 'calc(100vh)', overflow: 'scroll initial', backgroundColor: '#333' }}>
             <CDBSidebar textColor="#fff" backgroundColor="#333">
                 <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
                     <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
@@ -36,6 +50,9 @@ const Sidebar = () => {
                         <NavLink exact to="/activities" activeClassName="activeClicked">
                             <CDBSidebarMenuItem icon="table">activities</CDBSidebarMenuItem>
                         </NavLink>
+                        <NavLink exact to="/messages" activeClassName="activeClicked">
+                            <CDBSidebarMenuItem icon="contact">messages</CDBSidebarMenuItem>
+                        </NavLink>
                         <NavLink exact to="/hero404" target="_blank" activeClassName="activeClicked">
                             <CDBSidebarMenuItem icon="exclamation-circle">info</CDBSidebarMenuItem>
                         </NavLink>
@@ -43,12 +60,15 @@ const Sidebar = () => {
                 </CDBSidebarContent>
 
                 <CDBSidebarFooter style={{ textAlign: 'center' }}>
+                <Link to="#" className="nav-link" onClick={handleLogout}>
+                    Logout
+                </Link>
                     <div
                         style={{
                             padding: '20px 5px',
                         }}
                     >
-                        Sidebar Footer
+                        FSTg Conference
                     </div>
                 </CDBSidebarFooter>
             </CDBSidebar>

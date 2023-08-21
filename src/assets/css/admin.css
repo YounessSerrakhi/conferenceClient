@@ -1,0 +1,9 @@
+.parentDiv {
+    display: flex;
+}
+
+.childDiv {
+    flex: 1;
+    border: 1px solid gray;
+    padding: 10px;
+}

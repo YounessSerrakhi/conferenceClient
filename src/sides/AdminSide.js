@@ -14,11 +14,14 @@ import StoreActivity from '../components/activity/StoreActivity';
 import ListActivities from '../components/activity/ListActivities';
 import UpdateActivity from '../components/activity/UpdateActivity';
 import ListUsers from '../components/user/ListUsers';
+import Navbar from '../components/admin/Navbar';
 
 export default function AdminSide() {
   return (
-    <div className="parentDiv">
+    <div>
       <Router>
+        <Navbar/>
+        <div className="parentDiv">
         <Sidebar className="childDiv" />
         <Routes>
           <Route path="/" element={<AdminHome />}>
@@ -35,6 +38,7 @@ export default function AdminSide() {
           <Route path="/activity/update/:id" element={<UpdateActivity />} />
           <Route path="/users" element={<ListUsers />} />
         </Routes>
+        </div>
       </Router>
     </div>
   )

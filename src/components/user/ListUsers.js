@@ -28,7 +28,11 @@ function ListUsers() {
     }
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/users')
+        axios.get('http://127.0.0.1:8000/api/users', {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
             .then(response => setUsers(response.data))
             .catch(error => console.error('Error fetching users:', error));
     }, []);

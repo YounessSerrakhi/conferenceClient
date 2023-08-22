@@ -15,7 +15,11 @@ const StoreActivity = () => {
         // Fetch the list of presenters (speakers) to populate the dropdown
         const fetchPresenters = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/speakers'); // Adjust the endpoint as needed
+                const response = await axios.get('http://127.0.0.1:8000/api/speakers', {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }); // Adjust the endpoint as needed
                 const presentersData = response.data;
                 setPresenters(presentersData);
             } catch (error) {
@@ -38,7 +42,11 @@ const StoreActivity = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/activities', formData);
+            const response = await axios.post('http://127.0.0.1:8000/api/activities', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             console.log('Response:', response.data);
             navigate('/activities');
         } catch (error) {

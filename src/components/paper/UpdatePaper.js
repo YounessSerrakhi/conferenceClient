@@ -17,7 +17,11 @@ function UpdatePaper() {
     const { id } = useParams();
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/users')
+        axios.get('http://127.0.0.1:8000/api/users', {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
             .then(response => setUsers(response.data))
             .catch(error => console.error('Error fetching users:', error));
     }, []);
@@ -26,7 +30,11 @@ function UpdatePaper() {
         // Fetch speaker data based on the speakerId and populate the form
         const fetchPaperData = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/papers/${id}`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/papers/${id}`, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
                 const paperData = response.data;
                 setAuteurId(paperData.auteurId);
                 setPdfPath(paperData.resumer);

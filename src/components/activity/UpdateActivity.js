@@ -16,7 +16,11 @@ const UpdateActivity = () => {
         // Fetch the activity data based on the activityId and populate the form
         const fetchActivityData = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/activities/${id}`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/activities/${id}`, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
                 const activityData = response.data;
 
                 setFormData({
@@ -37,7 +41,11 @@ const UpdateActivity = () => {
         // Fetch the list of presenters (speakers) to populate the dropdown
         const fetchPresenters = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/speakers'); // Adjust the endpoint as needed
+                const response = await axios.get('http://127.0.0.1:8000/api/speakers', {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }); // Adjust the endpoint as needed
                 const presentersData = response.data;
 
                 // Set presenters data in the state
@@ -64,7 +72,11 @@ const UpdateActivity = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.put(`http://127.0.0.1:8000/api/activities/${id}`, formData);
+            const response = await axios.put(`http://127.0.0.1:8000/api/activities/${id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             console.log('Response:', response.data);
         } catch (error) {
             console.error('Error updating activity:', error);

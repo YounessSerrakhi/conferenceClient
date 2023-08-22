@@ -12,7 +12,7 @@ function Navbar() {
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/api/users').then((r) => setUsers(r.data)).catch((e) => console.error(e));
         axios.get('http://127.0.0.1:8000/api/papers').then((r) => setPapers(r.data)).catch((e) => console.error(e));
-    });
+    } , []);
 
     const openModal = () => {
         setIsModalOpen(true);

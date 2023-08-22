@@ -34,7 +34,11 @@ const ListSpeakers = () => {
         // Fetch the list of speakers from the server
         const fetchSpeakers = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/speakers');
+                const response = await axios.get('http://127.0.0.1:8000/api/speakers', {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
                 const speakersData = response.data;
                 setSpeakers(speakersData);
             } catch (error) {
@@ -47,7 +51,11 @@ const ListSpeakers = () => {
     useEffect(() => {
         const fetchSpeakers = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/speakers');
+                const response = await axios.get('http://127.0.0.1:8000/api/speakers', {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
                 const speakersData = response.data;
 
                 setSpeakers(speakersData);
@@ -60,10 +68,18 @@ const ListSpeakers = () => {
 
     const deleteSpeaker = (id) => {
         try {
-            axios.delete(`http://127.0.0.1:8000/api/speakers/${id}`);
+            axios.delete(`http://127.0.0.1:8000/api/speakers/${id}`, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             const fetchSpeakers = async () => {
                 try {
-                    const response = await axios.get('http://127.0.0.1:8000/api/speakers');
+                    const response = await axios.get('http://127.0.0.1:8000/api/speakers', {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    });
                     const speakersData = response.data;
 
                     setSpeakers(speakersData);

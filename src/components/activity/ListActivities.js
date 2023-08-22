@@ -34,7 +34,11 @@ const ListActivities = () => {
         // Fetch the list of activities from the server
         const fetchActivities = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/activities');
+                const response = await axios.get('http://127.0.0.1:8000/api/activities', {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
                 const activitiesData = response.data;
                 setActivities(activitiesData);
             } catch (error) {
@@ -49,7 +53,11 @@ const ListActivities = () => {
         // Fetch the list of activities from the server
         const fetchActivities = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/activities');
+                const response = await axios.get('http://127.0.0.1:8000/api/activities', {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
                 const activitiesData = response.data;
                 setActivities(activitiesData);
             } catch (error) {
@@ -62,10 +70,18 @@ const ListActivities = () => {
 
     const deleteActivity = (id) => {
         try {
-            axios.delete(`http://127.0.0.1:8000/api/activities/${id}`);
+            axios.delete(`http://127.0.0.1:8000/api/activities/${id}`, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             const fetchActivities = async () => {
                 try {
-                    const response = await axios.get('http://127.0.0.1:8000/api/activities');
+                    const response = await axios.get('http://127.0.0.1:8000/api/activities', {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    });
                     const ActivitiesData = response.data;
 
                     setActivities(ActivitiesData);

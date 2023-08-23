@@ -43,7 +43,7 @@ export default function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-light fixed-top shadow-0" style={myStyle}>
     <div className="container">
       <a className="navbar-brand" href="#!">
-        <span style={{ color: '#5e9693' }}>FSTg</span>
+        <span style={{ color: '#0e1ec0' }}>FSTg</span>
         <span style={{ color: '#fff' }}>   Conference</span>
       </a>
       <button

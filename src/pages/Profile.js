@@ -49,7 +49,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="wrapper bg-white mt-sm-5">
+    <div className="wrapper bg-white">
       <h4 className="pb-4 border-bottom">Profile settings</h4>
       <div className="d-flex align-items-start py-3 border-bottom">
         <img

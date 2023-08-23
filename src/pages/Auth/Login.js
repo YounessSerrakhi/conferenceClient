@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 
 import { useAuth } from '../../Contexts/AuthContext';
 import Cookies from 'js-cookie';
+import ResetPasswordrequest from './ResetPasswordRequest';
 
 function Login() {
   
@@ -40,7 +41,7 @@ const {login,api} = useAuth();
  
 
   return (
-    <div className="wrapper my-5 d-flex flex-column w-50">
+    <div className="wrapper d-flex flex-column w-50">
   <form onSubmit={handleSubmit}>
   <div className="text-center mb-3">
       <h4>Identification</h4>
@@ -78,7 +79,9 @@ const {login,api} = useAuth();
           Remember me
         </label>
       </div>
-      <a href="!#" className="text-decoration-none">Mot de passe oublié?</a>
+      <ResetPasswordrequest/>
+      {//<a href="#" className="text-decoration-none" onClick={handlForgetPassword}>Mot de passe oublié?</a>
+      }
     </div>
 
     <button className="btn btn-primary mb-4" type="submit">

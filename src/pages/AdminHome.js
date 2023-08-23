@@ -13,7 +13,7 @@ function AdminHome() {
         axios.get('http://127.0.0.1:8000/api/papers').then((r) => console.log(r.data)).catch((e) => console.error(e));
         axios.get('http://127.0.0.1:8000/api/speakers').then((r) => console.log(r.data)).catch((e) => console.error(e));
         axios.get('http://127.0.0.1:8000/api/activities').then((r) => console.log(r.data)).catch((e) => console.error(e));
-    });
+    } ,[]);
 
     return (
         <div className=' childDiv'>

@@ -32,7 +32,11 @@ function ListPapers() {
 
     useEffect(() => {
         // Fetch the list of papers
-        axios.get('http://127.0.0.1:8000/api/papers')
+        axios.get('http://127.0.0.1:8000/api/papers', {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
             .then(response => {
                 setPapers(response.data);
             })
@@ -43,7 +47,11 @@ function ListPapers() {
 
     useEffect(() => {
         // Fetch the list of papers
-        axios.get('http://127.0.0.1:8000/api/papers')
+        axios.get('http://127.0.0.1:8000/api/papers', {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
             .then(response => {
                 setPapers(response.data);
             })
@@ -55,10 +63,18 @@ function ListPapers() {
 
     const deletePaper = (id) => {
         try {
-            axios.delete(`http://127.0.0.1:8000/api/papers/${id}`);
+            axios.delete(`http://127.0.0.1:8000/api/papers/${id}`, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             const fetchPapers = async () => {
                 try {
-                    const response = await axios.get('http://127.0.0.1:8000/api/papers');
+                    const response = await axios.get('http://127.0.0.1:8000/api/papers', {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    });
                     const PapersData = response.data;
                     setPapers(PapersData);
                 } catch (error) {
@@ -70,6 +86,38 @@ function ListPapers() {
         } catch (error) {
             console.error('Error fetching papers:', error);
         }
+    }
+
+    function acceptPaper(id){
+        let formData = new FormData();
+        formData.append('status', 'accepted');
+        axios.post(`http://127.0.0.1:8000/api/status/${id}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        }).then(response => {
+            console.log(response.data);
+            setRender(!render);
+        })
+            .catch(error => {
+                console.error('Error uploding paper', error);
+            });
+    }
+
+    function refusePaper(id){
+        let formData = new FormData();
+        formData.append('status', 'refuesed');
+        axios.post(`http://127.0.0.1:8000/api/status/${id}`,formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        }).then(response => {
+            console.log(response.data);
+            setRender(!render);
+        })
+            .catch(error => {
+                console.error('Error uploding paper', error);
+            });
     }
 
     return (
@@ -93,6 +141,7 @@ function ListPapers() {
                             <th><b>Auteur</b></th>
                             <th><b>Resumer</b></th>
                             <th><b>status</b></th>
+                            <th><b>seen</b></th>
                             <th><b>Actions</b></th>
                         </tr>
                     </thead>
@@ -109,7 +158,22 @@ function ListPapers() {
                                         <img height={'50px'} width={'40px'} src={img} alt={paper.id} />
                                     </a>
                                 </td>
-                                <td>{paper.status}</td>
+                                <td style={{color :(paper.status === 'accepted')?'green' : 'red',}}>
+                                   {paper.status}   
+                                </td>
+                                <td>
+                                    {
+                                        (paper.status === 'accepted' || paper.status === 'refuesed')?
+                                         'seen':<div>
+                                            <button onClick={()=>acceptPaper(paper.id)} className='btn m-1 btn-success'>
+                                               Accept
+                                            </button>
+                                            <button onClick={()=>refusePaper(paper.id)} className='btn m-1 btn-danger'>
+                                               refuese
+                                            </button>
+                                         </div>
+                                    }
+                                </td>
                                 <td>
                                     <button className='btn btn-warning m-1' onClick={() => navigate(`/paper/update/${paper.id}`)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">

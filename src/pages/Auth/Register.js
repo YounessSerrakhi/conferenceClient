@@ -136,7 +136,7 @@ function Register(){
   </form>
   <div className="text-center">
     <p>
-      vous ête déja enregistré? <Link to='/login'>Register</Link>
+      vous ête déja enregistré? <Link to='/login'>identifier</Link>
     </p>
     <p>
       <Link to='/'>Aller à la page principale! </Link>

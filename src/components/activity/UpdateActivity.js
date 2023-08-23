@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-
+import { useNavigate, useParams } from 'react-router-dom';
+import ModalResponse from '../admin/ModalResponse';
 const UpdateActivity = () => {
     const [formData, setFormData] = useState({
         title: '',
@@ -9,8 +9,11 @@ const UpdateActivity = () => {
         time: '',
         presenterId: '',
     });
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [msg, setMsg] = useState('');
+    const [msgStyle, setMsgStyle] = useState('');
     const [presenters, setPresenters] = useState([]);
+    const navigate = useNavigate();
     const { id } = useParams();
     useEffect(() => {
         // Fetch the activity data based on the activityId and populate the form
@@ -72,19 +75,48 @@ const UpdateActivity = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.put(`http://127.0.0.1:8000/api/activities/${id}`, formData, {
+            const response = await axios.post(`http://127.0.0.1:8000/api/activities/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
             console.log('Response:', response.data);
+            setMsg(response.data);
+            setMsgStyle('green');
+            openModal();
         } catch (error) {
             console.error('Error updating activity:', error);
+            setMsg(error.message);
+            setMsgStyle('red');
+            openModal();
         }
     };
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const getList = () => {
+        navigate('/activities')
+    }
+
     return (
         <div className='childDiv'>
+            <div>
+                <ModalResponse button={(msgStyle === 'green')?'Continue':'Try again'}
+                    isOpen={isModalOpen}
+                    onClose={(msgStyle === 'green') ? () => getList() : () => closeModal()}>
+                    <div style={{ color: msgStyle }}>
+                        <p>
+                            {msg}
+                        </p>
+                    </div>
+                </ModalResponse>
+            </div>
             <h2>Update Activity</h2>
             <form onSubmit={handleSubmit}>
                 <div className='form-group mb-2'>

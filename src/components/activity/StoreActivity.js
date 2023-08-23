@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import ModalResponse from '../admin/ModalResponse';
 const StoreActivity = () => {
     const [presenters, setPresenters] = useState([])
     const [formData, setFormData] = useState({
@@ -10,6 +10,9 @@ const StoreActivity = () => {
         time: '', // Use datetime for the date and time input
         presenterId: '',
     });
+    const [msg, setMsg] = useState('');
+    const [msgStyle, setMsgStyle] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
         // Fetch the list of presenters (speakers) to populate the dropdown
@@ -48,14 +51,42 @@ const StoreActivity = () => {
                 },
             });
             console.log('Response:', response.data);
-            navigate('/activities');
+            setMsg(response.data);
+            setMsgStyle('green');
+            openModal();
         } catch (error) {
             console.error('Error storing activity:', error);
+            setMsg(error.message);
+            setMsgStyle('red');
+            openModal();
         }
     };
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const getList = () => {
+        navigate('/activities')
+    }
+
     return (
         <div className='childDiv'>
+            <div>
+                <ModalResponse button={(msgStyle === 'green')?'Continue':'Try again'}
+                    isOpen={isModalOpen}
+                    onClose={(msgStyle === 'green') ? () => getList() : () => closeModal()}>
+                    <div style={{ color: msgStyle }}>
+                        <p>
+                            {msg}
+                        </p>
+                    </div>
+                </ModalResponse>
+            </div>
             <h2>Store Activity</h2>
             <form onSubmit={handleSubmit}>
                 <div className='form-group mb-2'>

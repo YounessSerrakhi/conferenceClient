@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import ModalResponse from '../admin/ModalResponse';
 function UpdatePaper() {
     const [formData, setFormData] = useState({
         auteurId: '',
@@ -15,6 +15,9 @@ function UpdatePaper() {
     const [status, setStatus] = useState('');
     const [pdfPath, setPdfPath] = useState('');
     const { id } = useParams();
+    const [msg, setMsg] = useState('');
+    const [msgStyle, setMsgStyle] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/api/users', {
@@ -75,15 +78,43 @@ function UpdatePaper() {
             },
         }).then((response) => {
             console.log(response.data);
-            navigate('/papers');
+            setMsg(response.data);
+            setMsgStyle('green');
+            openModal();
         }).catch((error) => {
             console.log(error);
+            setMsg(error.message);
+            setMsgStyle('red');
+            openModal();
         });
 
     };
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const getList = () => {
+        navigate('/papers')
+    }
+
     return (
         <div className='childDiv'>
+            <div>
+                <ModalResponse button={(msgStyle === 'green') ? 'Continue' : 'Try again'}
+                    isOpen={isModalOpen}
+                    onClose={(msgStyle === 'green') ? () => getList() : () => closeModal()}>
+                    <div style={{ color: msgStyle }}>
+                        <p>
+                            {msg}
+                        </p>
+                    </div>
+                </ModalResponse>
+            </div>
             <h2>Update Paper</h2>
             <center>
                 <embed src={`http://127.0.0.1:8000/storage/${pdfPath}`} width="800px" height="300px" />

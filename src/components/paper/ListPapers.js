@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import img from '../../images/pdf.png';
 import { Link, useNavigate } from 'react-router-dom';
+import ModalResponse from '../admin/ModalResponse';
 function ListPapers() {
     const [papers, setPapers] = useState([]);
     const navigate = useNavigate();
@@ -14,6 +15,9 @@ function ListPapers() {
     const npage = Math.ceil(papers.length / recordsPerPage);
     const numbers = [...Array(npage + 1).keys()].slice(1);
     const [search, setSearch] = useState('');
+    const [msg, setMsg] = useState('');
+    const [msgStyle, setMsgStyle] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
     function prevPage() {
         if (currentPage !== firstIndex) {
             setCurrentPage(currentPage - 1);
@@ -67,6 +71,16 @@ function ListPapers() {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
+            }).then((response) => {
+                console.log(response.data);
+                setMsg(response.data);
+                setMsgStyle('green');
+                openModal();
+            }).catch((error) => {
+                console.log(error);
+                setMsg(error.message);
+                setMsgStyle('red');
+                openModal();
             });
             const fetchPapers = async () => {
                 try {
@@ -88,7 +102,7 @@ function ListPapers() {
         }
     }
 
-    function acceptPaper(id){
+    function acceptPaper(id) {
         let formData = new FormData();
         formData.append('status', 'accepted');
         axios.post(`http://127.0.0.1:8000/api/status/${id}`, formData, {
@@ -104,10 +118,10 @@ function ListPapers() {
             });
     }
 
-    function refusePaper(id){
+    function refusePaper(id) {
         let formData = new FormData();
         formData.append('status', 'refuesed');
-        axios.post(`http://127.0.0.1:8000/api/status/${id}`,formData, {
+        axios.post(`http://127.0.0.1:8000/api/status/${id}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -120,8 +134,29 @@ function ListPapers() {
             });
     }
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+
+
     return (
         <div className='childDiv'>
+            <div>
+                <ModalResponse button={'Close'}
+                    isOpen={isModalOpen}
+                    onClose={closeModal}>
+                    <div style={{ color: msgStyle }}>
+                        <p>
+                            {msg}
+                        </p>
+                    </div>
+                </ModalResponse>
+            </div>
             <div>
                 <Link className='btn btn-primary' to="/paper/create">
                     create paper
@@ -158,20 +193,20 @@ function ListPapers() {
                                         <img height={'50px'} width={'40px'} src={img} alt={paper.id} />
                                     </a>
                                 </td>
-                                <td style={{color :(paper.status === 'accepted')?'green' : 'red',}}>
-                                   {paper.status}   
+                                <td style={{ color: (paper.status === 'accepted') ? 'green' : 'red', }}>
+                                    {paper.status}
                                 </td>
                                 <td>
                                     {
-                                        (paper.status === 'accepted' || paper.status === 'refuesed')?
-                                         'seen':<div>
-                                            <button onClick={()=>acceptPaper(paper.id)} className='btn m-1 btn-success'>
-                                               Accept
-                                            </button>
-                                            <button onClick={()=>refusePaper(paper.id)} className='btn m-1 btn-danger'>
-                                               refuese
-                                            </button>
-                                         </div>
+                                        (paper.status === 'accepted' || paper.status === 'refuesed') ?
+                                            'seen' : <div>
+                                                <button onClick={() => acceptPaper(paper.id)} className='btn m-1 btn-success'>
+                                                    Accept
+                                                </button>
+                                                <button onClick={() => refusePaper(paper.id)} className='btn m-1 btn-danger'>
+                                                    refuese
+                                                </button>
+                                            </div>
                                     }
                                 </td>
                                 <td>
@@ -192,11 +227,6 @@ function ListPapers() {
                 </table>
                 <nav aria-label="Page navigation example">
                     <ul className="pagination">
-                        <li className='page-item'>
-                            <a onClick={prevPage} href='#' className='page-link'>
-                                prev
-                            </a>
-                        </li>
                         {
                             numbers.map((n, i) => (
                                 <li className={`page-item  ${currentPage === n ? 'active' : ''}`} key={i}>
@@ -206,11 +236,6 @@ function ListPapers() {
                                 </li>
                             ))
                         }
-                        <li className='page-item'>
-                            <a onClick={nextPage} href='#' className='page-link'>
-                                next
-                            </a>
-                        </li>
                     </ul>
                 </nav>
             </div>

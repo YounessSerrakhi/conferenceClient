@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-
+import ModalResponse from '../admin/ModalResponse';
 const ListSpeakers = () => {
     const [speakers, setSpeakers] = useState([]);
     const navigate = useNavigate();
@@ -14,6 +14,10 @@ const ListSpeakers = () => {
     const npage = Math.ceil(speakers.length / recordsPerPage);
     const numbers = [...Array(npage + 1).keys()].slice(1);
     const [search, setSearch] = useState('');
+    const [msg, setMsg] = useState('');
+    const [msgStyle, setMsgStyle] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     function prevPage() {
         if (currentPage !== firstIndex) {
             setCurrentPage(currentPage - 1);
@@ -72,6 +76,16 @@ const ListSpeakers = () => {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
+            }).then((response) => {
+                console.log(response.data);
+                setMsg(response.data);
+                setMsgStyle('green');
+                openModal();
+            }).catch((error) => {
+                console.error(error);
+                setMsg(error.message);
+                setMsgStyle('red');
+                openModal();
             });
             const fetchSpeakers = async () => {
                 try {
@@ -94,10 +108,30 @@ const ListSpeakers = () => {
         }
     }
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+
 
 
     return (
         <div className='childDiv'>
+            <div>
+                <ModalResponse button={'close'}
+                    isOpen={isModalOpen}
+                    onClose={closeModal}>
+                    <div style={{ color: msgStyle }}>
+                        <p>
+                            {msg}
+                        </p>
+                    </div>
+                </ModalResponse>
+            </div>
             <div>
                 <Link className='btn btn-primary' to="/speaker/create">
                     create speaker
@@ -150,11 +184,6 @@ const ListSpeakers = () => {
                 </table>
                 <nav aria-label="Page navigation example">
                     <ul className="pagination">
-                        <li className='page-item'>
-                            <a onClick={prevPage} href='#' className='page-link'>
-                                prev
-                            </a>
-                        </li>
                         {
                             numbers.map((n, i) => (
                                 <li className={`page-item  ${currentPage === n ? 'active' : ''}`} key={i}>
@@ -164,11 +193,6 @@ const ListSpeakers = () => {
                                 </li>
                             ))
                         }
-                        <li className='page-item'>
-                            <a onClick={nextPage} href='#' className='page-link'>
-                                next
-                            </a>
-                        </li>
                     </ul>
                 </nav>
             </div>

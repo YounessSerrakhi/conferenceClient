@@ -3306,7 +3306,7 @@ input, select, textarea {
 
 	/* Navbar */
 
-	#navbar a {
+	#navbar a{
 		border-bottom-color: rgba(255, 255, 255, 0.35);
 		color: rgba(255, 255, 255, 0.8);
 	}
@@ -3315,6 +3315,16 @@ input, select, textarea {
 			border-bottom-color: transparent;
 			color: #0e1ec0;
 		}
+
+		#navbar i{
+			border-bottom-color: rgba(255, 255, 255, 0.35);
+			color: rgba(255, 255, 255, 0.8);
+		}
+	
+			#navbar i:hover {
+				border-bottom-color: transparent;
+				color: #0e1ec0;
+			}
 
 /*Profile*/
 		

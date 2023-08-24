@@ -49,6 +49,7 @@ function ListUsers() {
                             <th><b>Name</b></th>
                             <th><b>Email</b></th>
                             <th><b>Phone</b></th>
+                            <th><b>Verified At</b></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,6 +62,7 @@ function ListUsers() {
                                 <td>{user.nom} {user.prenom}</td>
                                 <td>{user.email}</td>
                                 <td>{user.tel}</td>
+                                <td>{user.email_verified_at}</td>
                             </tr>
                         ))}
                     </tbody>

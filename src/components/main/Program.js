@@ -1,29 +1,62 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../Contexts/AuthContext';
+import Cookies from 'js-cookie';
+
 
 export default function Program() {
+	const [activities, setActivities] = useState([]);
+
+	const {api} = useAuth();
+	
+
+	useEffect(() => {
+        // Fetch the list of activities from the server
+		console.log('test');
+				api.defaults.headers['Authorization'] = `Bearer ${Cookies.get('token')}`;
+                api.get('/api/activities').then(response=>{
+					setActivities(response.data);
+					console.log("activity fetshed");
+				}
+
+				).catch (error =>{
+                console.error('Error fetching activities:', error);
+            });
+		},[]);
+
+
   return (
-    <div class="box alt container">
-					<section class="feature left">
-						<a href="#" class="image icon solid fa-signal"><img src="images/pic01.jpg" alt="" /></a>
-						<div class="content">
-							<h3>The First Thing</h3>
-							<p>Vitae natoque dictum etiam semper magnis enim feugiat amet curabitur tempor orci penatibus. Tellus erat mauris ipsum fermentum etiam vivamus eget. Nunc nibh morbi quis fusce lacus.</p>
-						</div>
-					</section>
-					<section class="feature right">
-						<a href="#" class="image icon solid fa-code"><img src="images/pic02.jpg" alt="" /></a>
-						<div class="content">
-							<h3>The Second Thing</h3>
-							<p>Vitae natoque dictum etiam semper magnis enim feugiat amet curabitur tempor orci penatibus. Tellus erat mauris ipsum fermentum etiam vivamus eget. Nunc nibh morbi quis fusce lacus.</p>
-						</div>
-					</section>
-					<section class="feature left">
-						<a href="#" class="image icon solid fa-mobile-alt"><img src="images/pic03.jpg" alt="" /></a>
-						<div class="content">
-							<h3>The Third Thing</h3>
-							<p>Vitae natoque dictum etiam semper magnis enim feugiat amet curabitur tempor orci penatibus. Tellus erat mauris ipsum fermentum etiam vivamus eget. Nunc nibh morbi quis fusce lacus.</p>
-						</div>
-					</section>
-				</div>
-  )
-}
+	<div class="box container">
+  <section>
+	
+	<div class="table-wrapper">
+		<table class="default">
+			<thead>
+				<tr>
+					<th>Horaire</th>
+					<th>title</th>
+					<th>Description</th>
+					<th>Speakers</th>
+				</tr>
+			</thead>
+			<tbody>
+                        {activities.map((activity) => (
+                            <tr key={activity.id}>
+								<td scope="row"> {activity.time} </td>
+								<td> {activity.title}</td>
+								<td> {activity.description}</td>
+								<td> {activity.presenterName}</td>
+                            </tr>
+                        ))}
+						
+            </tbody>
+			<tfoot>
+				<tr>
+					<td colspan="0">19:00</td>
+					<td>END</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</section>
+</div>
+)}

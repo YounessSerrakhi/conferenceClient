@@ -6,7 +6,8 @@ const UpdateActivity = () => {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        time: '',
+        startingTime: '',
+        endingTime: '',
         presenterId: '',
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -73,9 +74,13 @@ const UpdateActivity = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        const formDataToSend = new FormData();
+        formDataToSend.append('title', formData.title);
+        formDataToSend.append('description', formData.description);
+        formDataToSend.append('time', formData.startingTime+" - "+formData.endingTime);
+        formDataToSend.append('presenterId', formData.presenterId);
         try {
-            const response = await axios.post(`http://127.0.0.1:8000/api/activities/${id}`, formData, {
+            const response = await axios.post(`http://127.0.0.1:8000/api/activities/${id}`, formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -139,12 +144,22 @@ const UpdateActivity = () => {
                     />
                 </div>
                 <div className='form-group mb-2'>
-                    <label>Time:</label>
+                    <label>Starting Time:</label>
                     <input
                         type="time" // Use datetime-local for date and time input
-                        name="time"
+                        name="startingTime"
                         className='form-control'
-                        value={formData.time}
+                        value={formData.startingTime}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <div className='form-group mb-2'>
+                    <label>Ending Time:</label>
+                    <input
+                        type="time" // Use datetime-local for date and time input
+                        name="endingTime"
+                        className='form-control'
+                        value={formData.endingTime}
                         onChange={handleInputChange}
                     />
                 </div>

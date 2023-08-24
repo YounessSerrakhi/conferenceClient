@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-
+import { useNavigate, useParams } from 'react-router-dom';
+import ModalResponse from '../admin/ModalResponse';
 const UpdateActivity = () => {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        time: '',
+        startingTime: '',
+        endingTime: '',
         presenterId: '',
     });
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [msg, setMsg] = useState('');
+    const [msgStyle, setMsgStyle] = useState('');
     const [presenters, setPresenters] = useState([]);
+    const navigate = useNavigate();
     const { id } = useParams();
     useEffect(() => {
         // Fetch the activity data based on the activityId and populate the form
         const fetchActivityData = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/activities/${id}`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/activities/${id}`, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
                 const activityData = response.data;
 
                 setFormData({
@@ -37,7 +45,11 @@ const UpdateActivity = () => {
         // Fetch the list of presenters (speakers) to populate the dropdown
         const fetchPresenters = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/speakers'); // Adjust the endpoint as needed
+                const response = await axios.get('http://127.0.0.1:8000/api/speakers', {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }); // Adjust the endpoint as needed
                 const presentersData = response.data;
 
                 // Set presenters data in the state
@@ -62,17 +74,54 @@ const UpdateActivity = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        const formDataToSend = new FormData();
+        formDataToSend.append('title', formData.title);
+        formDataToSend.append('description', formData.description);
+        formDataToSend.append('time', formData.startingTime+" - "+formData.endingTime);
+        formDataToSend.append('presenterId', formData.presenterId);
         try {
-            const response = await axios.put(`http://127.0.0.1:8000/api/activities/${id}`, formData);
+            const response = await axios.post(`http://127.0.0.1:8000/api/activities/${id}`, formDataToSend, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             console.log('Response:', response.data);
+            setMsg(response.data);
+            setMsgStyle('green');
+            openModal();
         } catch (error) {
             console.error('Error updating activity:', error);
+            setMsg(error.message);
+            setMsgStyle('red');
+            openModal();
         }
     };
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const getList = () => {
+        navigate('/activities')
+    }
+
     return (
         <div className='childDiv'>
+            <div>
+                <ModalResponse button={(msgStyle === 'green')?'Continue':'Try again'}
+                    isOpen={isModalOpen}
+                    onClose={(msgStyle === 'green') ? () => getList() : () => closeModal()}>
+                    <div style={{ color: msgStyle }}>
+                        <p>
+                            {msg}
+                        </p>
+                    </div>
+                </ModalResponse>
+            </div>
             <h2>Update Activity</h2>
             <form onSubmit={handleSubmit}>
                 <div className='form-group mb-2'>
@@ -95,12 +144,22 @@ const UpdateActivity = () => {
                     />
                 </div>
                 <div className='form-group mb-2'>
-                    <label>Time:</label>
+                    <label>Starting Time:</label>
                     <input
                         type="time" // Use datetime-local for date and time input
-                        name="time"
+                        name="startingTime"
                         className='form-control'
-                        value={formData.time}
+                        value={formData.startingTime}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <div className='form-group mb-2'>
+                    <label>Ending Time:</label>
+                    <input
+                        type="time" // Use datetime-local for date and time input
+                        name="endingTime"
+                        className='form-control'
+                        value={formData.endingTime}
                         onChange={handleInputChange}
                     />
                 </div>

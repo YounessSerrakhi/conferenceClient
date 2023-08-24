@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import ModalResponse from '../admin/ModalResponse';
 const StoreActivity = () => {
     const [presenters, setPresenters] = useState([])
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        time: '', // Use datetime for the date and time input
+        startingTime: '',
+        endingTime: '',
         presenterId: '',
     });
+    const [msg, setMsg] = useState('');
+    const [msgStyle, setMsgStyle] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
         // Fetch the list of presenters (speakers) to populate the dropdown
         const fetchPresenters = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/speakers'); // Adjust the endpoint as needed
+                const response = await axios.get('http://127.0.0.1:8000/api/speakers', {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }); // Adjust the endpoint as needed
                 const presentersData = response.data;
                 setPresenters(presentersData);
             } catch (error) {
@@ -36,18 +44,55 @@ const StoreActivity = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        const formDataToSend = new FormData();
+        formDataToSend.append('title', formData.title);
+        formDataToSend.append('description', formData.description);
+        formDataToSend.append('time', formData.startingTime+" - "+formData.endingTime);
+        formDataToSend.append('presenterId', formData.presenterId);
+        
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/activities', formData);
+            const response = await axios.post('http://127.0.0.1:8000/api/activities', formDataToSend, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             console.log('Response:', response.data);
-            navigate('/activities');
+            setMsg(response.data);
+            setMsgStyle('green');
+            openModal();
         } catch (error) {
-            console.error('Error storing activity:', error);
+            console.error(error.message);
+            setMsg(error.message);
+            setMsgStyle('red');
+            openModal();
         }
     };
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const getList = () => {
+        navigate('/activities')
+    }
+
     return (
         <div className='childDiv'>
+            <div>
+                <ModalResponse button={(msgStyle === 'green')?'Continue':'Try again'}
+                    isOpen={isModalOpen}
+                    onClose={(msgStyle === 'green') ? () => getList() : () => closeModal()}>
+                    <div style={{ color: msgStyle }}>
+                        <p>
+                            {msg}
+                        </p>
+                    </div>
+                </ModalResponse>
+            </div>
             <h2>Store Activity</h2>
             <form onSubmit={handleSubmit}>
                 <div className='form-group mb-2'>
@@ -70,12 +115,22 @@ const StoreActivity = () => {
                     />
                 </div>
                 <div className='form-group mb-2'>
-                    <label>Time:</label>
+                    <label>Starting Time:</label>
                     <input
                         type="time" // Use datetime-local for date and time input
-                        name="time"
+                        name="startingTime"
                         className='form-control'
-                        value={formData.datetime}
+                        value={formData.startingTime}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <div className='form-group mb-2'>
+                    <label>Ending Time:</label>
+                    <input
+                        type="time" // Use datetime-local for date and time input
+                        name="endingTime"
+                        className='form-control'
+                        value={formData.endingTime}
                         onChange={handleInputChange}
                     />
                 </div>

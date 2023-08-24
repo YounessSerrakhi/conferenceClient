@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import ModalResponse from '../admin/ModalResponse';
 function StorePaper() {
     const [resumerFile, setResumerFile] = useState(null);
     const [auteurId, setAuteurId] = useState(''); // Populate this based on your authentication logic
     const [status, setStatus] = useState('');
     const [users, setUsers] = useState([]);
     const navigate = useNavigate();
+    const [msg, setMsg] = useState('');
+    const [msgStyle, setMsgStyle] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const handleResumerChange = (event) => {
         const file = event.target.files[0];
         setResumerFile(file);
     };
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/users')
+        axios.get('http://127.0.0.1:8000/api/users', {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
             .then(response => setUsers(response.data))
             .catch(error => console.error('Error fetching users:', error));
     }, []);
@@ -41,18 +48,44 @@ function StorePaper() {
             },
         }).then(response => {
             console.log(response.data);
-            navigate('/papers');
+            setMsg(response.data);
+            setMsgStyle('green');
+            openModal();
         })
             .catch(error => {
                 console.error('Error uploding paper', error);
+                setMsg(error.message);
+                setMsgStyle('red');
+                openModal();
             });
 
     };
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
 
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const getList = () => {
+        navigate('/papers')
+    }
 
     return (
         <div className='childDiv'>
+            <div>
+                <ModalResponse button={(msgStyle === 'green')?'Continue':'Try again'}
+                    isOpen={isModalOpen}
+                    onClose={(msgStyle === 'green') ? () => getList() : () => closeModal()}>
+                    <div style={{ color: msgStyle }}>
+                        <p>
+                            {msg}
+                        </p>
+                    </div>
+                </ModalResponse>
+            </div>
             <h2>Create Paper</h2>
             <form onSubmit={handleSubmit}>
                 <div className='form-group mb-2'>

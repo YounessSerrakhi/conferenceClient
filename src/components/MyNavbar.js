@@ -17,6 +17,7 @@ export default function MyNavbar() {
   const handleLogout = (event) => {
     event.preventDefault();
     logout(event);
+    setShowModal(false);
     navigate('/');
   };
 
@@ -40,6 +41,18 @@ export default function MyNavbar() {
     backgroundColor: `rgba(0, 0, 0, ${transparence})`
   };
 
+  const scrollToSection = (sectionId) => {
+    if (window.location.pathname !== '/') {
+        navigate('/');
+        //scrollToSection(sectionId)  i dont know why it does not work!!!!    
+    } else {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+};
+
   return (
     <div id="navbar">
       <Navbar expand="lg" className="navbar navbar-light fixed-top shadow-0" style={myStyle}>
@@ -53,22 +66,22 @@ export default function MyNavbar() {
           </Navbar.Toggle>
           <Navbar.Collapse id="navbarSupportedContent">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/">
+              <Nav.Link onClick={() => scrollToSection('header')}>
                 conference
               </Nav.Link>
-              <Nav.Link as={Link} to="/">
+              <Nav.Link onClick={() => scrollToSection('program')}>
                 programme
               </Nav.Link>
-              <Nav.Link as={Link} to="/">
+              <Nav.Link onClick={() => scrollToSection('speakers')}>
                 Speakers
               </Nav.Link>
-              <Nav.Link as={Link} to="/">
+              <Nav.Link onClick={() => scrollToSection('reference')}>
                 Reference
               </Nav.Link>
-              <Nav.Link as={Link} to="/">
+              <Nav.Link onClick={() => scrollToSection('contact')}>
                 Contact
               </Nav.Link>
-              <Nav.Link as={Link} to="/">
+              <Nav.Link onClick={() => scrollToSection('team')}>
                 Team
               </Nav.Link>
             </Nav>

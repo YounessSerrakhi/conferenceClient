@@ -9,10 +9,10 @@ function AdminHome() {
     const [activities, setActivities] = useState([]);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/users').then((r) => console.log(r.data)).catch((e) => console.error(e));
-        axios.get('http://127.0.0.1:8000/api/papers').then((r) => console.log(r.data)).catch((e) => console.error(e));
-        axios.get('http://127.0.0.1:8000/api/speakers').then((r) => console.log(r.data)).catch((e) => console.error(e));
-        axios.get('http://127.0.0.1:8000/api/activities').then((r) => console.log(r.data)).catch((e) => console.error(e));
+        axios.get('http://127.0.0.1:8000/api/users').then((r) => setUsers(r.data)).catch((e) => console.error(e));
+        axios.get('http://127.0.0.1:8000/api/papers').then((r) => setPapers(r.data)).catch((e) => console.error(e));
+        axios.get('http://127.0.0.1:8000/api/speakers').then((r) => setSpeakers(r.data)).catch((e) => console.error(e));
+        axios.get('http://127.0.0.1:8000/api/activities').then((r) => setActivities(r.data)).catch((e) => console.error(e));
     } ,[]);
 
     return (
@@ -33,7 +33,7 @@ function AdminHome() {
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">Users</h5>
-                                <p class="card-text">
+                                <p class="card-text text-center">
                                     {users.length}
                                 </p>
                             </div>
@@ -49,7 +49,7 @@ function AdminHome() {
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">Speakers</h5>
-                                <p class="card-text">
+                                <p class="card-text text-center">
                                     {speakers.length}
                                 </p>
                             </div>
@@ -65,7 +65,7 @@ function AdminHome() {
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">Papers</h5>
-                                <p class="card-text">
+                                <p class="card-text text-center">
                                     {papers.length}
                                 </p>
                             </div>
@@ -80,7 +80,7 @@ function AdminHome() {
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">Activities</h5>
-                                <p class="card-text">
+                                <p class="card-text text-center">
                                     {activities.length}
                                 </p>
                             </div>

@@ -24,7 +24,7 @@ export default function SpeakerCarts() {
 		},[]);
 
   return (
-    <div class="box container">
+    <div class="box container" id="speakers">
     <section>
     <header>
 		<h3>Event Speakers</h3>

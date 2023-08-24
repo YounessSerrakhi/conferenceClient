@@ -25,9 +25,11 @@ export default function Program() {
 
 
   return (
-	<div class="box container">
+	<div class="box container" id='program'>
   <section>
-	
+	<header>
+		<h3>Event Schedule</h3>
+	</header>
 	<div class="table-wrapper">
 		<table class="default">
 			<thead>

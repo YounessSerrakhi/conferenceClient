@@ -4,8 +4,10 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Home from '../pages/Home';
 import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
+import ResetPassword from '../pages/Auth/ResetPassword';
 import Layout from '../pages/Layout';
-import Profile from '../components/Profile';
+import Profile from '../pages/Profile';
+import ResetPasswordrequest from '../pages/Auth/ResetPasswordRequest';
 
 export default function UserSide() {
   return (
@@ -17,6 +19,9 @@ export default function UserSide() {
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} />
           <Route path='profile' element={<Profile />} />
+          <Route path='reset-password/:token' element={<ResetPassword />} />
+          <Route path='reset-password-request' element={<ResetPasswordrequest />} />
+          
         </Route>
       </Routes>
     </BrowserRouter>

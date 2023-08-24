@@ -23,7 +23,7 @@ export default function Contact() {
 	  };
 
   return (
-<div class="container medium">
+<div class="box container medium">
 					<header class="major last">
 						<h2>Questions or comments?</h2>
 					</header>

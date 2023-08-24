@@ -42,7 +42,7 @@ const navigate = useNavigate();
  
 
   return (
-    <div className="wrapper d-flex flex-column w-50">
+    <div className="wrapper d-flex flex-column">
   <form onSubmit={handleSubmit}>
   <div className="text-center mb-3">
       <h4>Identification</h4>

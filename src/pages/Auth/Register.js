@@ -48,7 +48,7 @@ function Register(){
 
 
     return(
-      <div className="wrapper my-5 d-flex flex-column w-50">
+      <div className="wrapper my-5 d-flex flex-column">
   <form onSubmit={handleSubmit}>
     <div className="text-center mb-3">
       <h4>Inscription</h4>

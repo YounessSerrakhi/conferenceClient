@@ -4,7 +4,7 @@ import axios from 'axios';
 function ListUsers() {
     const [users, setUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const recordsPerPage = 7;
+    const recordsPerPage = 3;
     const lastIndex = currentPage * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
     const records = users.slice(firstIndex, lastIndex);
@@ -15,10 +15,11 @@ function ListUsers() {
         if (currentPage !== firstIndex) {
             setCurrentPage(currentPage - 1);
         }
+        
     }
 
     function nextPage() {
-        if (currentPage !== lastIndex) {
+        if (currentPage < lastIndex) {
             setCurrentPage(currentPage + 1)
         }
     }
@@ -28,7 +29,11 @@ function ListUsers() {
     }
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/users')
+        axios.get('http://127.0.0.1:8000/api/users', {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
             .then(response => setUsers(response.data))
             .catch(error => console.error('Error fetching users:', error));
     }, []);
@@ -67,11 +72,6 @@ function ListUsers() {
                 </table>
                 <nav aria-label="Page navigation example">
                     <ul className="pagination">
-                        <li className='page-item'>
-                            <a onClick={prevPage} href='#' className='page-link'>
-                                prev
-                            </a>
-                        </li>
                         {
                             numbers.map((n, i) => (
                                 <li className={`page-item  ${currentPage === n ? 'active' : ''}`} key={i}>
@@ -81,11 +81,6 @@ function ListUsers() {
                                 </li>
                             ))
                         }
-                        <li className='page-item'>
-                            <a onClick={nextPage} href='#' className='page-link'>
-                                next
-                            </a>
-                        </li>
                     </ul>
                 </nav>
             </div>

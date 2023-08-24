@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ModalResponse from '../admin/ModalResponse';
 
 const StoreSpeaker = () => {
+    const [msg, setMsg] = useState('');
+    const [msgStyle, setMsgStyle] = useState('');
     const [formData, setFormData] = useState({
         firstname: '',
         lastname: '',
@@ -10,6 +13,7 @@ const StoreSpeaker = () => {
         bio: '',
         image: null,
     });
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -51,14 +55,42 @@ const StoreSpeaker = () => {
                 bio: '',
                 image: null,
             });
-            navigate('/speakers');
+            setMsg(response.data);
+            setMsgStyle('green');
+            openModal();
         } catch (error) {
+            setMsg(error.message);
+            setMsgStyle('red');
+            openModal();
             console.error('Error uploading data:', error);
         }
     };
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const getList = () => {
+        navigate('/speakers')
+    }
+
     return (
         <div className='childDiv'>
+            <div>
+                <ModalResponse button={(msgStyle === 'green')?'Continue':'Try again'}
+                    isOpen={isModalOpen}
+                    onClose={(msgStyle === 'green') ? () => getList() : () => closeModal()}>
+                    <div style={{ color: msgStyle }}>
+                        <p>
+                            {msg}
+                        </p>
+                    </div>
+                </ModalResponse>
+            </div>
             <h2>Upload Data</h2>
             <form onSubmit={handleSubmit}>
                 <div className='form-group mb-2'>

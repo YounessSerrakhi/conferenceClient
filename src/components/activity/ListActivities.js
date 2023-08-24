@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-
+import ModalResponse from '../admin/ModalResponse';
 const ListActivities = () => {
     const [activities, setActivities] = useState([]);
     const navigate = useNavigate();
@@ -14,6 +14,10 @@ const ListActivities = () => {
     const npage = Math.ceil(activities.length / recordsPerPage);
     const numbers = [...Array(npage + 1).keys()].slice(1);
     const [search, setSearch] = useState('');
+    const [msg, setMsg] = useState('');
+    const [msgStyle, setMsgStyle] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     function prevPage() {
         if (currentPage !== firstIndex) {
             setCurrentPage(currentPage - 1);
@@ -34,7 +38,11 @@ const ListActivities = () => {
         // Fetch the list of activities from the server
         const fetchActivities = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/activities');
+                const response = await axios.get('http://127.0.0.1:8000/api/activities', {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
                 const activitiesData = response.data;
                 setActivities(activitiesData);
             } catch (error) {
@@ -49,7 +57,11 @@ const ListActivities = () => {
         // Fetch the list of activities from the server
         const fetchActivities = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/activities');
+                const response = await axios.get('http://127.0.0.1:8000/api/activities', {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
                 const activitiesData = response.data;
                 setActivities(activitiesData);
             } catch (error) {
@@ -62,10 +74,28 @@ const ListActivities = () => {
 
     const deleteActivity = (id) => {
         try {
-            axios.delete(`http://127.0.0.1:8000/api/activities/${id}`);
+            axios.delete(`http://127.0.0.1:8000/api/activities/${id}`, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }).then((response) => {
+                console.log(response.data);
+                setMsg(response.data);
+                setMsgStyle('green');
+                openModal();
+            }).catch((error) => {
+                console.error(error);
+                setMsg(error.message);
+                setMsgStyle('red');
+                openModal();
+            });
             const fetchActivities = async () => {
                 try {
-                    const response = await axios.get('http://127.0.0.1:8000/api/activities');
+                    const response = await axios.get('http://127.0.0.1:8000/api/activities', {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    });
                     const ActivitiesData = response.data;
 
                     setActivities(ActivitiesData);
@@ -80,8 +110,31 @@ const ListActivities = () => {
         }
     }
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const getList = () => {
+        navigate('/activities')
+    }
+
     return (
         <div className='childDiv'>
+            <div>
+                <ModalResponse button={'Close'}
+                    isOpen={isModalOpen}
+                    onClose={closeModal}>
+                    <div style={{ color: msgStyle }}>
+                        <p>
+                            {msg}
+                        </p>
+                    </div>
+                </ModalResponse>
+            </div>
             <div>
                 <Link className='btn btn-primary' to="/activity/create">
                     create activity
@@ -134,11 +187,6 @@ const ListActivities = () => {
                 </table>
                 <nav aria-label="Page navigation example">
                     <ul className="pagination">
-                        <li className='page-item'>
-                            <a onClick={prevPage} href='#' className='page-link'>
-                                prev
-                            </a>
-                        </li>
                         {
                             numbers.map((n, i) => (
                                 <li className={`page-item  ${currentPage === n ? 'active' : ''}`} key={i}>
@@ -148,11 +196,6 @@ const ListActivities = () => {
                                 </li>
                             ))
                         }
-                        <li className='page-item'>
-                            <a onClick={nextPage} href='#' className='page-link'>
-                                next
-                            </a>
-                        </li>
                     </ul>
                 </nav>
             </div>

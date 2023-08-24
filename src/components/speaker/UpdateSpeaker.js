@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import ModalResponse from '../admin/ModalResponse';
 
 const UpdateSpeaker = () => {
     const [formData, setFormData] = useState({
@@ -11,14 +12,20 @@ const UpdateSpeaker = () => {
         image: null,
     });
     const [imgPath, setImgPath] = useState('');
-
+    const [msg, setMsg] = useState('');
+    const [msgStyle, setMsgStyle] = useState('');
     const { id } = useParams();
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate();
     useEffect(() => {
         // Fetch speaker data based on the speakerId and populate the form
         const fetchSpeakerData = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/speakers/${id}`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/speakers/${id}`, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
                 const speakerData = response.data;
 
                 setFormData({
@@ -70,13 +77,42 @@ const UpdateSpeaker = () => {
             },
         }).then((response) => {
             console.log(response.data);
+            setMsg(response.data);
+            setMsgStyle('green');
+            openModal();
         }).catch((error) => {
-            console.log(error);
+            setMsg(error.message);
+            setMsgStyle('red');
+            openModal();
+            console.log(error.message);
         })
     };
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const getList = () => {
+        navigate('/speakers')
+    }
+
     return (
         <div className='childDiv'>
+            <div>
+                <ModalResponse button={(msgStyle === 'green')?'Continue':'Try again'}
+                    isOpen={isModalOpen}
+                    onClose={(msgStyle === 'green') ? () => getList() : () => closeModal()}>
+                    <div style={{ color: msgStyle }}>
+                        <p>
+                            {msg}
+                        </p>
+                    </div>
+                </ModalResponse>
+            </div>
             <h2>Update Speaker</h2>
             <center>
                 <img style={{ border: "1px solid #000", borderRadius: "12px" }} height={"200px"} width={"180px"} src={`http://127.0.0.1:8000/storage/${imgPath}`} alt={`currnt speaker`} />

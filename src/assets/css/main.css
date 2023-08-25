@@ -3322,7 +3322,8 @@ input, select, textarea {
     padding: 30px 50px;
     border: 1px solid #ddd;
     border-radius: 15px;
-    margin: 5rem auto;
+    margin: auto;
+	margin-top: 7rem;
     max-width: 600px;
 }
 .out{

@@ -154,6 +154,7 @@ const ListActivities = () => {
                             <th><b>Title</b></th>
                             <th><b>Description</b></th>
                             <th><b>Time</b></th>
+                            <th><b>Day</b></th>
                             <th><b>Presenter</b></th>
                             <th><b>actions</b></th>
                         </tr>
@@ -168,6 +169,7 @@ const ListActivities = () => {
                                 <td> {activity.title}</td>
                                 <td> {activity.description}</td>
                                 <td> {activity.time}</td>
+                                <td> {activity.day}</td>
                                 <td> {activity.presenterName}</td>
                                 <td>
                                     <button className='btn btn-warning m-1' onClick={() => navigate(`/activity/update/${activity.id}`)}>

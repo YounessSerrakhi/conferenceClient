@@ -62,7 +62,7 @@ export default function MyNavbar() {
             <span style={{ color: '#fff' }}>   Conference</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarSupportedContent" onClick={()=>setTransparance(transparence<1?1:window.scrollY / 500)}>
-            <i className="fas fa-bars"></i>
+            <i className="fas fa-bars" style={{color :'#ffffff' }}></i>
           </Navbar.Toggle>
           <Navbar.Collapse id="navbarSupportedContent">
             <Nav className="me-auto">
@@ -89,10 +89,14 @@ export default function MyNavbar() {
               {Cookies.get('token') === undefined ? (
                 <>
                   <Nav.Link as={Link} to="/login">
-                    Login
+                    <button className='btn btn-primary m-1'>
+                      Login
+                    </button>
                   </Nav.Link>
                   <Nav.Link as={Link} to="/register">
-                    Register
+                      <button className='btn btn-primary m-1'>
+                      Register
+                      </button>
                   </Nav.Link>
                 </>
               ) : (

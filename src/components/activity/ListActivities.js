@@ -143,7 +143,7 @@ const ListActivities = () => {
             <h2>List of Activities</h2>
             <div>
                 <form>
-                    <input placeholder='Search By Lastname...' type="text" className='form-control' onChange={(e) => setSearch(e.target.value)} />
+                    <input placeholder='Search By Title...' type="text" className='form-control' onChange={(e) => setSearch(e.target.value)} />
                 </form>
             </div>
             <div className='m-1'>
@@ -154,6 +154,7 @@ const ListActivities = () => {
                             <th><b>Title</b></th>
                             <th><b>Description</b></th>
                             <th><b>Time</b></th>
+                            <th><b>Day</b></th>
                             <th><b>Presenter</b></th>
                             <th><b>actions</b></th>
                         </tr>
@@ -161,13 +162,14 @@ const ListActivities = () => {
                     <tbody>
                         {records.filter((item) => {
                             return search.toLowerCase() === '' ? item :
-                                item.presenterName.toLowerCase().includes(search.toLowerCase());
+                                item.title.toLowerCase().includes(search.toLowerCase());
                         }).map((activity) => (
                             <tr key={activity.id}>
                                 <td scope="row"> {activity.id} </td>
                                 <td> {activity.title}</td>
                                 <td> {activity.description}</td>
                                 <td> {activity.time}</td>
+                                <td> {activity.day}</td>
                                 <td> {activity.presenterName}</td>
                                 <td>
                                     <button className='btn btn-warning m-1' onClick={() => navigate(`/activity/update/${activity.id}`)}>

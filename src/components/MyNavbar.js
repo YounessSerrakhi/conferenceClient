@@ -57,42 +57,43 @@ export default function MyNavbar() {
     <div id="navbar">
       <Navbar expand="lg" className="navbar navbar-light fixed-top shadow-0" style={myStyle}>
         <div className="container">
-          <Navbar.Brand as={Link} to="/">
+          <Navbar.Brand onClick={() => scrollToSection('header')}>
             <span style={{ color: '#0e1ec0' }}>FSTg</span>
             <span style={{ color: '#fff' }}>   Conference</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarSupportedContent" onClick={()=>setTransparance(transparence<1?1:window.scrollY / 500)}>
-            <i className="fas fa-bars"></i>
+            <i className="fas fa-bars" style={{color :'#ffffff' }}></i>
           </Navbar.Toggle>
           <Navbar.Collapse id="navbarSupportedContent">
             <Nav className="me-auto">
-              <Nav.Link onClick={() => scrollToSection('header')}>
-                conference
-              </Nav.Link>
-              <Nav.Link onClick={() => scrollToSection('program')}>
-                programme
+              <Nav.Link onClick={() => scrollToSection('about')}>
+                About
               </Nav.Link>
               <Nav.Link onClick={() => scrollToSection('speakers')}>
                 Speakers
               </Nav.Link>
-              <Nav.Link onClick={() => scrollToSection('reference')}>
-                Reference
+              <Nav.Link onClick={() => scrollToSection('program')}>
+                Program
+              </Nav.Link>
+              <Nav.Link as={Link} to="/apply">
+                Apply
               </Nav.Link>
               <Nav.Link onClick={() => scrollToSection('contact')}>
                 Contact
-              </Nav.Link>
-              <Nav.Link onClick={() => scrollToSection('team')}>
-                Team
               </Nav.Link>
             </Nav>
             <Nav className="d-flex flex-row">
               {Cookies.get('token') === undefined ? (
                 <>
                   <Nav.Link as={Link} to="/login">
-                    Login
+                    <button className='btn btn-primary m-1'>
+                      Login
+                    </button>
                   </Nav.Link>
                   <Nav.Link as={Link} to="/register">
-                    Register
+                      <button className='btn btn-primary m-1'>
+                      Register
+                      </button>
                   </Nav.Link>
                 </>
               ) : (

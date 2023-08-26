@@ -13,7 +13,14 @@ export default function Footer() {
 					</ul>
 
 					<ul class="copyright">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						<li>&copy; fstgConference. All rights reserved.</li>
+						<li>
+						Made by: 
+							<ul>
+								<li><a href="https://www.linkedin.com/in/youness-serrakhi/">SERRAKHI Younees</a></li>
+								<li><a href="https://www.linkedin.com/in/abdelhadi-elbcir/">ELBCIR Abdalhadi</a></li>
+							</ul>
+						</li>
 					</ul>
 
 				</div>

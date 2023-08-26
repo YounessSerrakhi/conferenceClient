@@ -8,6 +8,7 @@ const UpdateActivity = () => {
         description: '',
         startingTime: '',
         endingTime: '',
+        day:'',
         presenterId: '',
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,6 +32,7 @@ const UpdateActivity = () => {
                     title: activityData.title,
                     description: activityData.description,
                     time: activityData.time,
+                    day:activityData.day,
                     presenterId: activityData.presenterId,
                 });
             } catch (error) {
@@ -76,6 +78,7 @@ const UpdateActivity = () => {
         e.preventDefault();
         const formDataToSend = new FormData();
         formDataToSend.append('title', formData.title);
+        formDataToSend.append('day', formData.day);
         formDataToSend.append('description', formData.description);
         formDataToSend.append('time', formData.startingTime+" - "+formData.endingTime);
         formDataToSend.append('presenterId', formData.presenterId);
@@ -143,25 +146,37 @@ const UpdateActivity = () => {
                         onChange={handleInputChange}
                     />
                 </div>
-                <div className='form-group mb-2'>
-                    <label>Starting Time:</label>
-                    <input
-                        type="time" // Use datetime-local for date and time input
-                        name="startingTime"
-                        className='form-control'
-                        value={formData.startingTime}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div className='form-group mb-2'>
-                    <label>Ending Time:</label>
-                    <input
-                        type="time" // Use datetime-local for date and time input
-                        name="endingTime"
-                        className='form-control'
-                        value={formData.endingTime}
-                        onChange={handleInputChange}
-                    />
+                <div className='row m-2'>
+                    <div className='col-md-4 form-group p-1'>
+                        <label>Starting Time:</label>
+                        <input
+                            type="time" // Use datetime-local for date and time input
+                            name="startingTime"
+                            className='form-control'
+                            value={formData.startingTime}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div className='col-md-4 form-group p-1'>
+                        <label>Ending Time:</label>
+                        <input
+                            type="time"
+                            name="endingTime"
+                            className='form-control'
+                            value={formData.endingTime}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div className='col-md-4 form-group p-1'>
+                        <label>Day Number:</label>
+                        <input
+                            type="number"
+                            name="day"
+                            className='form-control'
+                            value={formData.day}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                 </div>
                 <div className='form-group mb-2'>
                     <label>Presenter:</label>

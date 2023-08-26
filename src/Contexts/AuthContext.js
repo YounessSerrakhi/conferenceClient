@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState} from 'react';
+import React, { createContext, useContext} from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
@@ -9,7 +9,6 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const api = axios.create({
     baseURL: 'http://127.0.0.1:8000',
     headers: {
@@ -21,7 +20,6 @@ export function AuthProvider({ children }) {
 
   const login = (response) => {
     Cookies.set('token', `${response.data.token}`, { secure: true, sameSite: 'strict',expires: 7 });
-    setIsAuthenticated(true);
     api.defaults.headers['Authorization'] = `Bearer ${Cookies.get('token')}`;
     api.get("api/user").then(response=>{
       Cookies.set('userName', `${response.data.userData.nom} ${response.data.userData.prenom}`, { expires: 7 });
@@ -38,8 +36,7 @@ export function AuthProvider({ children }) {
     api.post('api/logout').then(response => {
       alert(response.data.message); }).catch(err=>{
         alert(err);
-      });     
-    setIsAuthenticated(false);
+      });  
     Cookies.remove('token');
     Cookies.set('role', 'user', { expires: 7 });
     Cookies.remove('userName');
@@ -49,7 +46,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, api }}>
+    <AuthContext.Provider value={{login, logout, api }}>
       {children}
     </AuthContext.Provider>
   );

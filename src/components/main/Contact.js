@@ -12,13 +12,20 @@ export default function Contact() {
 	  });
 	
 	  const {api} = useAuth();
-	  const handleContact = () => {
+	  
+	  const handleContact = (e) => {
+		e.preventDefault();
+		api.defaults.headers['Authorization'] = `Bearer ${Cookies.get('token')}`;
 		api.post('/api/contact/add', contactData)
 		  .then(response => {
-			console.log(response.data.message);
+			alert(response.data.message);
+			setContactData(prevData => ({
+				...prevData,
+				message:"",
+			  }))
 		  })
 		  .catch(error => {
-			console.error('Error updating user data:', error);
+			console.error('Error sending:', error);
 		  });
 	  };
 
@@ -28,10 +35,10 @@ export default function Contact() {
 						<h2>Questions or comments?</h2>
 					</header>
 
-					<p>Vitae natoque dictum etiam semper magnis enim feugiat amet curabitur tempor
-					orci penatibus. Tellus erat mauris ipsum fermentum etiam vivamus.</p>
+					<p>If you have any questions or comments, we'd love to hear from you. Our team is here to assist you and provide the information you need. Feel free to reach out to us through our contact form or by emailing us directly.
+						 We value your feedback and look forward to engaging with you.</p>
 
-					<form method="post" action="#">
+					<form onSubmit={handleContact}>
 						<div class="row">
 							<div class="col-6 col-12-mobilep">
 								<input type="text" name="name" placeholder="Name" 
@@ -65,7 +72,7 @@ export default function Contact() {
 							</div>
 							<div class="col-12">
 								<ul class="actions special">
-									<li><button className="btn btn-primary button" style={{color: '#ffffff'}} onClick={handleContact}>Save Changes</button></li>
+									<li><button className="btn btn-primary button" style={{color: '#ffffff'}} type='submit'>Send</button></li>
 									<li><button className="btn border button" onClick={()=>{setContactData(prevData => ({...prevData,message: ""}))}}>Cancel</button></li>
 								</ul>
 							</div>

@@ -57,7 +57,7 @@ export default function MyNavbar() {
     <div id="navbar">
       <Navbar expand="lg" className="navbar navbar-light fixed-top shadow-0" style={myStyle}>
         <div className="container">
-          <Navbar.Brand as={Link} to="/">
+          <Navbar.Brand onClick={() => scrollToSection('header')}>
             <span style={{ color: '#0e1ec0' }}>FSTg</span>
             <span style={{ color: '#fff' }}>   Conference</span>
           </Navbar.Brand>
@@ -66,23 +66,20 @@ export default function MyNavbar() {
           </Navbar.Toggle>
           <Navbar.Collapse id="navbarSupportedContent">
             <Nav className="me-auto">
-              <Nav.Link onClick={() => scrollToSection('header')}>
-                conference
-              </Nav.Link>
-              <Nav.Link onClick={() => scrollToSection('program')}>
-                programme
+              <Nav.Link onClick={() => scrollToSection('about')}>
+                About
               </Nav.Link>
               <Nav.Link onClick={() => scrollToSection('speakers')}>
                 Speakers
               </Nav.Link>
-              <Nav.Link onClick={() => scrollToSection('reference')}>
-                Reference
+              <Nav.Link onClick={() => scrollToSection('program')}>
+                Program
+              </Nav.Link>
+              <Nav.Link as={Link} to="/apply">
+                Apply
               </Nav.Link>
               <Nav.Link onClick={() => scrollToSection('contact')}>
                 Contact
-              </Nav.Link>
-              <Nav.Link onClick={() => scrollToSection('team')}>
-                Team
               </Nav.Link>
             </Nav>
             <Nav className="d-flex flex-row">

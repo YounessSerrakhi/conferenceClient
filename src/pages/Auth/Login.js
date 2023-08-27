@@ -5,6 +5,7 @@ import {Link, useNavigate} from "react-router-dom";
 import { useAuth } from '../../Contexts/AuthContext';
 import Cookies from 'js-cookie';
 import ResetPasswordrequest from './ResetPasswordRequest';
+import { useEffect } from 'react';
 
 function Login() {
   
@@ -13,14 +14,16 @@ const [password, setPassword] = useState('');
 const {login,api} = useAuth();
 const navigate = useNavigate();
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+     
     const formData = new FormData();
     formData.append('email', email);
     formData.append('password', password);
 
-
+    
+     
     api.defaults.headers['Authorization'] = `Bearer ${Cookies.get('token')}`;
     api.post('api/login', formData, {
     })
@@ -30,6 +33,7 @@ const navigate = useNavigate();
         setEmail("");
         setPassword("");
         navigate("/");
+        window.location.reload(false);
       })
       .catch(error => {
         console.log(error);

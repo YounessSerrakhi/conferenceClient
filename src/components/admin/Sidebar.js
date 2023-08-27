@@ -20,6 +20,7 @@ const Sidebar = () => {
         event.preventDefault();
         logout();
         navigate('/');
+        window.location.reload(false);
     };
 
 
@@ -54,9 +55,9 @@ const Sidebar = () => {
                         <NavLink exact to="/messages" activeClassName="activeClicked">
                             <CDBSidebarMenuItem icon="sticky-note">messages</CDBSidebarMenuItem>
                         </NavLink>
-                        <NavLink exact to="/hero404" target="_blank" activeClassName="activeClicked">
+                        {/* <NavLink exact to="/hero404" target="_blank" activeClassName="activeClicked">
                             <CDBSidebarMenuItem icon="exclamation-circle">info</CDBSidebarMenuItem>
-                        </NavLink>
+                        </NavLink> */}
                     </CDBSidebarMenu>
                 </CDBSidebarContent>
 

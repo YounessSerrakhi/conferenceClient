@@ -19,6 +19,7 @@ export default function MyNavbar() {
     logout(event);
     setShowModal(false);
     navigate('/');
+    window.location.reload(false);
   };
 
   const handleScroll = () => {
@@ -98,10 +99,10 @@ export default function MyNavbar() {
                 </>
               ) : (
                 <>
-                  <Nav.Link as={Link} to="/profile">
+                  <Nav.Link className='m-1 p-1'  as={Link} to="/profile">
                     {Cookies.get('userName')}
                   </Nav.Link>
-                  <Nav.Link href="#" onClick={handleShow}>
+                  <Nav.Link className='m-1 p-1' href="#" onClick={handleShow}>
                     Logout
                   </Nav.Link>
                 </>

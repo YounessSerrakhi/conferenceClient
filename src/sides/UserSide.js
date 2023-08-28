@@ -9,6 +9,7 @@ import Layout from '../pages/Layout';
 import Profile from '../pages/Profile';
 import ResetPasswordrequest from '../pages/Auth/ResetPasswordRequest';
 import PrivateRoute from '../components/PrivateRoute';
+import ApplyForm from '../components/ApplyForm';
 
 
 
@@ -23,7 +24,7 @@ export default function UserSide() {
           <Route path='register' element={<Register />} />
           <Route element={<PrivateRoute/>}>
             <Route path='/profile' element={<Profile />}/>
-            <Route path='/apply' element={<Profile />}/>
+            <Route path='/apply' element={<ApplyForm/>}/>
           </Route>
           <Route path='reset-password/:token' element={<ResetPassword />} />
           <Route path='reset-password-request' element={<ResetPasswordrequest />} />

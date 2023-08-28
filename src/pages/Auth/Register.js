@@ -12,6 +12,8 @@ function Register(){
   const [firstName, setFirstName] = useState('');
   const [name, setName] = useState('');
   const [password_confirmation, setPassword_confirmation] = useState('');
+  const [moreData,setMoreData]=useState({city:"",university:"",currentDegree:"",previousDegrees:"",researchInterests:"",projectExperience:""});
+  const [error, setError] = useState(null);
   const {api} = useAuth();
   const navigate=useNavigate();
 
@@ -42,7 +44,12 @@ function Register(){
 
       })
       .catch(error => {
-        console.log(error);
+        if (error.response && error.response.data && error.response.data.errors) {
+          const validationErrors = error.response.data.errors;
+          setError(Object.values(validationErrors).flat().join(' \n'));
+        } else {
+          setError('An error occurred. Please try again later.');
+        }
       });
   };
 
@@ -117,6 +124,70 @@ function Register(){
         onChange={(e) => setPassword_confirmation(e.target.value)}
       />
     </div>
+    <div className="col-md-6">
+      <label htmlFor="city">City of Residence</label>
+      <input
+        type="text"
+        className="bg-light form-control"
+        placeholder="Your city of residence"
+        value={moreData.city}
+        onChange={event =>
+          setMoreData(prevData => ({
+            ...prevData,
+            city: event.target.value,
+          }))
+        }
+      />
+    </div>
+    <div className="col-md-6 ">
+      <label htmlFor="university">University/Institution Name</label>
+      <input
+        type="text"
+        className="bg-light form-control"
+        placeholder="Your university or institution"
+        value={moreData.university}
+        onChange={event =>
+          setMoreData(prevData => ({
+            ...prevData,
+            university: event.target.value,
+          }))
+        }
+      />
+    </div>
+
+  {/* Educational Background */}
+  <div className="row py-2">
+    <div className="col-md-6">
+      <label htmlFor="currentDegree">Current Degree</label>
+      <input
+        type="text"
+        className="bg-light form-control"
+        placeholder="e.g., PhD in Computer Science"
+        value={moreData.currentDegree}
+        onChange={event =>
+          setMoreData(prevData => ({
+            ...prevData,
+            currentDegree: event.target.value,
+          }))
+        }
+      />
+    </div>
+    <div className="col-md-6 ">
+      <label htmlFor="previousDegrees">Previous Degrees</label>
+      <input
+        type="text"
+        className="bg-light form-control"
+        placeholder="e.g., Master's in Engineering"
+        value={moreData.previousDegrees}
+        onChange={event =>
+          setMoreData(prevData => ({
+            ...prevData,
+            previousDegrees: event.target.value,
+          }))
+        }
+      />
+    </div>
+  </div>
 
     <div className="form-check d-flex justify-content-center mb-4">
       <input
@@ -133,6 +204,7 @@ function Register(){
     <button type="submit" className="btn btn-primary mb-4 w-100">
       S'inscrire
     </button>
+    <h5 style={{color:'red'}}>{error}</h5>
   </form>
   <div className="text-center">
     <p>

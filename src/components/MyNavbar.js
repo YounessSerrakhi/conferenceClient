@@ -62,7 +62,7 @@ export default function MyNavbar() {
             <span style={{ color: '#0e1ec0' }}>FSTg</span>
             <span style={{ color: '#fff' }}>   Conference</span>
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarSupportedContent" onClick={()=>setTransparance(transparence<1?1:window.scrollY / 500)}>
+          <Navbar.Toggle aria-controls="navbarSupportedContent" onClick={()=>setTransparance(window.location.pathname === '/'?transparence<1?1:window.scrollY / 500:1)}>
             <i className="fas fa-bars" style={{color :'#ffffff' }}></i>
           </Navbar.Toggle>
           <Navbar.Collapse id="navbarSupportedContent">

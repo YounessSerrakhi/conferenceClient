@@ -11,6 +11,7 @@ function Login() {
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const {login,api} = useAuth();
+const [error, setError] = useState(null);
 const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -31,9 +32,9 @@ const navigate = useNavigate();
         setPassword("");
         navigate("/");
       })
-      .catch(error => {
-        console.log(error);
-            });
+      .catch(() => {
+          setError('Info Incorrect.');
+      });
       
   };
 
@@ -88,6 +89,7 @@ const navigate = useNavigate();
     <button className="btn btn-primary mb-4" type="submit">
       S'identifier
     </button>
+    <h5 style={{color:'red'}}>{error}</h5>
   </form>
 
   <div className="text-center">

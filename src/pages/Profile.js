@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState , useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import { useAuth } from '../Contexts/AuthContext';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Profile() {
   const [verified,setVerified]=useState(false);
-  const [resumerFile, setResumerFile] = useState(null);
   const [userData, setUserData] = useState({
     id:'',
     prenom: '',
     nom: '',
     email: '',
     tel: '',
-    resumerFile: '',
   });
+  const [applicationStatus,setApplicationStatus]=useState("");
+  const navigate = useNavigate();
   const {api} = useAuth(); 
 
   const fetchUserData = () => {
@@ -35,13 +36,20 @@ export default function Profile() {
       .catch(error => {
         console.error('Error fetching user data:', error);
       });
+
+      //about application status
+      api.get(`/api/checkApplication/${Cookies.get('id')}`)
+      .then(response => {
+        setApplicationStatus(response.data.status);
+      })
+      .catch(error => {
+        console.error('Error application status:', error);
+      });
+      
   };
 
   useEffect(() => {
     fetchUserData();
-    if (window.location.pathname === '/apply') {
-      alert("fill all the empty values to get your badge."); 
-  }
   }, []);
 
   const handleSaveChanges = () => {
@@ -53,22 +61,7 @@ export default function Profile() {
       .catch(error => {
         console.error('Error updating user data:', error);
       });
-
-
-      //for paper
-      const paperData = new FormData();
-      paperData.append('resumer', resumerFile);
-      paperData.append('auteurId', userData.id );
-      api.post('/api/papers', paperData, {
-          headers: {
-              'Content-Type': 'multipart/form-data',
-          },
-      }).then(response => {
-          console.log(response.data);
-      })
-          .catch(error => {
-              console.error('Error uploding paper', error);
-          });    
+   
   };
 
   const handleCancel = () => {
@@ -86,11 +79,6 @@ export default function Profile() {
       });
 
   }
-
-  const handleResumerChange = (event) => {
-    const file = event.target.files[0];
-    setResumerFile(file);
-};
 
 
   return (
@@ -246,63 +234,8 @@ export default function Profile() {
     </div>
   </div>
 
-  {/* Research Interests */}
-  <div className="row py-2">
-    <div className="col-md-12">
-      <label htmlFor="researchInterests">Research Interests</label>
-      <textarea
-        className="bg-light form-control"
-        rows="3"
-        placeholder="Briefly describe your research interests"
-        value={userData.researchInterests}
-        onChange={event =>
-          setUserData(prevData => ({
-            ...prevData,
-            researchInterests: event.target.value,
-          }))
-        }
-      ></textarea>
-    </div>
-  </div>
-
-  {/* Project Experience */}
-  <div className="row py-2">
-    <div className="col-md-12">
-      <label htmlFor="projectExperience">Project Experience</label>
-      <textarea
-        className="bg-light form-control"
-        rows="3"
-        placeholder="Briefly describe your previous research projects or publications"
-        value={userData.projectExperience}
-        onChange={event =>
-          setUserData(prevData => ({
-            ...prevData,
-            projectExperience: event.target.value,
-          }))
-        }
-      ></textarea>
-    </div>
-  </div>
-
-
-        <div className="d-flex align-items-center py-3">
-        <div className="pl-sm-4 pl-2" id="img-section">
-          <b style={{ fontSize: '1.2rem' }}>Paper</b>
-          <p style={{ fontSize: '0.8rem' }}>
-              Put your cin, phd-cart-student,.. in one pdf and <b>upload it</b>
-          </p>
-        </div>
-        <input
-              type="file"
-              className='form-control'
-              id="resumer"
-              accept=".pdf"
-              onChange={handleResumerChange}
-            />
-      </div>
-
-        <div className="py-3 pb-4 border-bottom">
-          <button className="btn btn-primary mr-3" onClick={handleSaveChanges}>Save Changes</button>
+        <div className="py-3 pb-4 d-flex border-bottom">
+          <button className="btn btn-primary button mr-3" style={{color:"white"}}onClick={handleSaveChanges}>Save Changes</button>
           <button className="btn border button" onClick={handleCancel}>Cancel</button>
         </div>
       </div>
@@ -317,9 +250,26 @@ export default function Profile() {
       </button>
     )}
   </div>
+  </div>
+  <div className='row py-2'>
+  <div className="col-md-8">
+    <label>Application status :<b>{applicationStatus}</b></label>
+  </div>
+  <div className="col-md-4 d-flex justify-content-end align-items-center">
+    {applicationStatus === "Not Applied" && (
+      <button className="btn btn-success" onClick={()=>navigate('/apply')}>
+        Apply now!
+      </button>
+    )}
+    {/*applicationStatus === "Done" && (
+      <button className="btn btn-success" onClick={handleBadge}>
+        Get your Badge
+      </button>
+    )*/}
+  </div>
+  </div>
+
+
 </div>
-
-
-    </div>
   );
 }

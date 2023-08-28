@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-
+import Cookies from 'js-cookie';
 function AdminHome() {
     const [users, setUsers] = useState([]);
     const [papers, setPapers] = useState([]);
@@ -9,10 +9,30 @@ function AdminHome() {
     const [activities, setActivities] = useState([]);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/users').then((r) => setUsers(r.data)).catch((e) => console.error(e));
-        axios.get('http://127.0.0.1:8000/api/papers').then((r) => setPapers(r.data)).catch((e) => console.error(e));
-        axios.get('http://127.0.0.1:8000/api/speakers').then((r) => setSpeakers(r.data)).catch((e) => console.error(e));
-        axios.get('http://127.0.0.1:8000/api/activities').then((r) => setActivities(r.data)).catch((e) => console.error(e));
+        axios.get('http://127.0.0.1:8000/api/users',{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
+            },
+        }).then((r) => setUsers(r.data)).catch((e) => console.error(e));
+        axios.get('http://127.0.0.1:8000/api/papers',{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
+            },
+        }).then((r) => setPapers(r.data)).catch((e) => console.error(e));
+        axios.get('http://127.0.0.1:8000/api/speakers',{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
+            },
+        }).then((r) => setSpeakers(r.data)).catch((e) => console.error(e));
+        axios.get('http://127.0.0.1:8000/api/activities',{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
+            },
+        }).then((r) => setActivities(r.data)).catch((e) => console.error(e));
     } ,[]);
 
     return (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import ModalResponse from '../admin/ModalResponse';
-
+import Cookies from 'js-cookie';
 const UpdateSpeaker = () => {
     const [formData, setFormData] = useState({
         firstname: '',
@@ -24,6 +24,7 @@ const UpdateSpeaker = () => {
                 const response = await axios.get(`http://127.0.0.1:8000/api/speakers/${id}`, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${Cookies.get('token')}`
                     },
                 });
                 const speakerData = response.data;
@@ -74,6 +75,7 @@ const UpdateSpeaker = () => {
         axios.post(`http://127.0.0.1:8000/api/speakers/${id}`, formDataToSend, {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
             },
         }).then((response) => {
             console.log(response.data);

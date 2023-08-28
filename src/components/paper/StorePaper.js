@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ModalResponse from '../admin/ModalResponse';
+import Cookies from 'js-cookie';
 function StorePaper() {
     const [resumerFile, setResumerFile] = useState(null);
     const [auteurId, setAuteurId] = useState(''); // Populate this based on your authentication logic
@@ -20,6 +21,7 @@ function StorePaper() {
         axios.get('http://127.0.0.1:8000/api/users', {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
             },
         })
             .then(response => setUsers(response.data))
@@ -45,6 +47,8 @@ function StorePaper() {
         axios.post('http://127.0.0.1:8000/api/papers', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
+            
             },
         }).then(response => {
             console.log(response.data);

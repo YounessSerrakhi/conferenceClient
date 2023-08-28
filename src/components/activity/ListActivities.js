@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import ModalResponse from '../admin/ModalResponse';
+import Cookies from 'js-cookie';
 const ListActivities = () => {
     const [activities, setActivities] = useState([]);
     const navigate = useNavigate();
@@ -41,6 +42,7 @@ const ListActivities = () => {
                 const response = await axios.get('http://127.0.0.1:8000/api/activities', {
                     headers: {
                         'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${Cookies.get('token')}`
                     },
                 });
                 const activitiesData = response.data;
@@ -60,6 +62,7 @@ const ListActivities = () => {
                 const response = await axios.get('http://127.0.0.1:8000/api/activities', {
                     headers: {
                         'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${Cookies.get('token')}`
                     },
                 });
                 const activitiesData = response.data;
@@ -77,6 +80,7 @@ const ListActivities = () => {
             axios.delete(`http://127.0.0.1:8000/api/activities/${id}`, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${Cookies.get('token')}`
                 },
             }).then((response) => {
                 console.log(response.data);
@@ -94,6 +98,7 @@ const ListActivities = () => {
                     const response = await axios.get('http://127.0.0.1:8000/api/activities', {
                         headers: {
                             'Content-Type': 'multipart/form-data',
+                            'Authorization': `Bearer ${Cookies.get('token')}`
                         },
                     });
                     const ActivitiesData = response.data;

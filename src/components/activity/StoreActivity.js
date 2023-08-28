@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ModalResponse from '../admin/ModalResponse';
+import Cookies from 'js-cookie';
 const StoreActivity = () => {
     const [presenters, setPresenters] = useState([])
     const [formData, setFormData] = useState({
@@ -23,6 +24,7 @@ const StoreActivity = () => {
                 const response = await axios.get('http://127.0.0.1:8000/api/speakers', {
                     headers: {
                         'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${Cookies.get('token')}`
                     },
                 }); // Adjust the endpoint as needed
                 const presentersData = response.data;
@@ -56,6 +58,7 @@ const StoreActivity = () => {
             const response = await axios.post('http://127.0.0.1:8000/api/activities', formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${Cookies.get('token')}`
                 },
             });
             console.log('Response:', response.data);

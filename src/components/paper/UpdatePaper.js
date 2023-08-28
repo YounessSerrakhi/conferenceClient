@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import ModalResponse from '../admin/ModalResponse';
+import Cookies from 'js-cookie';
 function UpdatePaper() {
     const [formData, setFormData] = useState({
         auteurId: '',
@@ -23,6 +24,7 @@ function UpdatePaper() {
         axios.get('http://127.0.0.1:8000/api/users', {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
             },
         })
             .then(response => setUsers(response.data))
@@ -36,6 +38,7 @@ function UpdatePaper() {
                 const response = await axios.get(`http://127.0.0.1:8000/api/papers/${id}`, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${Cookies.get('token')}`
                     },
                 });
                 const paperData = response.data;
@@ -75,6 +78,7 @@ function UpdatePaper() {
         axios.post(`http://127.0.0.1:8000/api/papers/${id}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
             },
         }).then((response) => {
             console.log(response.data);

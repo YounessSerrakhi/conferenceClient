@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import Cookies from 'js-cookie';
 function ListUsers() {
     const [users, setUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -32,6 +32,7 @@ function ListUsers() {
         axios.get('http://127.0.0.1:8000/api/users', {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
             },
         })
             .then(response => setUsers(response.data))

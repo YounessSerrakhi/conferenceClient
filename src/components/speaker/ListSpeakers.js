@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import ModalResponse from '../admin/ModalResponse';
+import Cookies from 'js-cookie';
 const ListSpeakers = () => {
     const [speakers, setSpeakers] = useState([]);
     const navigate = useNavigate();
@@ -41,6 +42,7 @@ const ListSpeakers = () => {
                 const response = await axios.get('http://127.0.0.1:8000/api/speakers', {
                     headers: {
                         'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${Cookies.get('token')}`
                     },
                 });
                 const speakersData = response.data;
@@ -58,6 +60,7 @@ const ListSpeakers = () => {
                 const response = await axios.get('http://127.0.0.1:8000/api/speakers', {
                     headers: {
                         'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${Cookies.get('token')}`
                     },
                 });
                 const speakersData = response.data;
@@ -75,6 +78,7 @@ const ListSpeakers = () => {
             axios.delete(`http://127.0.0.1:8000/api/speakers/${id}`, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${Cookies.get('token')}`
                 },
             }).then((response) => {
                 console.log(response.data);
@@ -92,6 +96,7 @@ const ListSpeakers = () => {
                     const response = await axios.get('http://127.0.0.1:8000/api/speakers', {
                         headers: {
                             'Content-Type': 'multipart/form-data',
+                            'Authorization': `Bearer ${Cookies.get('token')}`
                         },
                     });
                     const speakersData = response.data;

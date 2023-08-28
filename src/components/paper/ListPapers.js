@@ -3,6 +3,7 @@ import axios from 'axios';
 import img from '../../images/pdf.png';
 import { Link, useNavigate } from 'react-router-dom';
 import ModalResponse from '../admin/ModalResponse';
+import Cookies from 'js-cookie';
 function ListPapers() {
     const [papers, setPapers] = useState([]);
     const navigate = useNavigate();
@@ -39,6 +40,7 @@ function ListPapers() {
         axios.get('http://127.0.0.1:8000/api/papers', {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
             },
         })
             .then(response => {
@@ -54,6 +56,7 @@ function ListPapers() {
         axios.get('http://127.0.0.1:8000/api/papers', {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
             },
         })
             .then(response => {
@@ -70,6 +73,7 @@ function ListPapers() {
             axios.delete(`http://127.0.0.1:8000/api/papers/${id}`, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${Cookies.get('token')}`
                 },
             }).then((response) => {
                 console.log(response.data);
@@ -87,6 +91,7 @@ function ListPapers() {
                     const response = await axios.get('http://127.0.0.1:8000/api/papers', {
                         headers: {
                             'Content-Type': 'multipart/form-data',
+                            'Authorization': `Bearer ${Cookies.get('token')}`
                         },
                     });
                     const PapersData = response.data;
@@ -108,6 +113,7 @@ function ListPapers() {
         axios.post(`http://127.0.0.1:8000/api/status/${id}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
             },
         }).then(response => {
             console.log(response.data);
@@ -124,6 +130,7 @@ function ListPapers() {
         axios.post(`http://127.0.0.1:8000/api/status/${id}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
             },
         }).then(response => {
             console.log(response.data);

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ModalResponse from '../admin/ModalResponse';
-
+import Cookies from 'js-cookie';
 const StoreSpeaker = () => {
     const [msg, setMsg] = useState('');
     const [msgStyle, setMsgStyle] = useState('');
@@ -44,6 +44,7 @@ const StoreSpeaker = () => {
             const response = await axios.post('http://127.0.0.1:8000/api/speakers', formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${Cookies.get('token')}`
                 },
             });
 

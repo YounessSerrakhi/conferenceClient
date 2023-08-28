@@ -3,15 +3,25 @@ import img from '../../images/admin.png';
 import Modal from './Modal';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-
+import Cookies from 'js-cookie';
 function Navbar() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [papers, setPapers] = useState([]);
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/newPapers').then((r) => setPapers(r.data)).catch((e) => console.error(e));
-        axios.get('http://127.0.0.1:8000/api/Unchecked').then((r) => setMessages(r.data)).catch((e) => console.error(e));
+        axios.get('http://127.0.0.1:8000/api/newPapers',{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
+            },
+        }).then((r) => setPapers(r.data)).catch((e) => console.error(e));
+        axios.get('http://127.0.0.1:8000/api/Unchecked',{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${Cookies.get('token')}`
+            },
+        }).then((r) => setMessages(r.data)).catch((e) => console.error(e));
     }, []);
     const openModal = () => {
         setIsModalOpen(true);

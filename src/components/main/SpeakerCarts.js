@@ -33,10 +33,10 @@ export default function SpeakerCarts() {
     {speakers.map(speaker => (
   <div class="col">
     <div class="card">
-      <img class="card-img-top" src={`http://127.0.0.1:8000/storage/${speaker.image}`} alt={`${speaker.firstname} ${speaker.lastname}`} />
+      <img class="card-img-top" height={'300px'} src={`http://127.0.0.1:8000/storage/${speaker.image}`} alt={`${speaker.firstname} ${speaker.lastname}`} />
       <div class="card-body">
         <h5 class="card-title">{`${speaker.firstname} ${speaker.lastname}`}</h5>
-        <p class="card-text">{speaker.bio}</p>
+        <p class="card-text text-center">{speaker.bio}</p>
       </div>
     </div>
   </div>))}

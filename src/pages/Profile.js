@@ -57,11 +57,11 @@ export default function Profile() {
     api.post('/api/users/update', userData)
       .then(response => {
         console.log(response.data.message);
+        alert(response.data.message);
       })
       .catch(error => {
         console.error('Error updating user data:', error);
       });
-   
   };
 
   const handleCancel = () => {
@@ -233,12 +233,11 @@ export default function Profile() {
       />
     </div>
   </div>
-
         <div className="py-3 pb-4 d-flex border-bottom">
           <button className="btn btn-primary button mr-3" style={{color:"white"}}onClick={handleSaveChanges}>Save Changes</button>
           <button className="btn border button" onClick={handleCancel}>Cancel</button>
         </div>
-      </div>
+   </div>
   <div className='row py-2'>
   <div className="col-md-6">
     <label>Email Verified? :<b>{verified?"yes":"no"}</b></label>

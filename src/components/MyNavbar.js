@@ -19,6 +19,7 @@ export default function MyNavbar() {
     logout(event);
     setShowModal(false);
     navigate('/');
+    window.location.reload(false);
   };
 
   const handleScroll = () => {
@@ -61,7 +62,7 @@ export default function MyNavbar() {
             <span style={{ color: '#0e1ec0' }}>FSTg</span>
             <span style={{ color: '#fff' }}>   Conference</span>
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarSupportedContent" onClick={()=>setTransparance(transparence<1?1:window.scrollY / 500)}>
+          <Navbar.Toggle aria-controls="navbarSupportedContent" onClick={()=>setTransparance(window.location.pathname === '/'?transparence<1?1:window.scrollY / 500:1)}>
             <i className="fas fa-bars" style={{color :'#ffffff' }}></i>
           </Navbar.Toggle>
           <Navbar.Collapse id="navbarSupportedContent">
@@ -98,10 +99,10 @@ export default function MyNavbar() {
                 </>
               ) : (
                 <>
-                  <Nav.Link as={Link} to="/profile">
+                  <Nav.Link className='m-1 p-1'  as={Link} to="/profile">
                     {Cookies.get('userName')}
                   </Nav.Link>
-                  <Nav.Link href="#" onClick={handleShow}>
+                  <Nav.Link className='m-1 p-1' href="#" onClick={handleShow}>
                     Logout
                   </Nav.Link>
                 </>

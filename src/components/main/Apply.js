@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Apply() {
+	
   return (
     <footer class="major container medium" style={{background:'#0e1ec0',color:"white",width:'100vw'}}>
 					<h3 style={{color:"#4FB1F0"}}>Get shady with science</h3>

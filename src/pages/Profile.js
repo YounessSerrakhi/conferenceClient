@@ -49,6 +49,7 @@ export default function Profile() {
     api.post('/api/users/update', userData)
       .then(response => {
         console.log(response.data.message);
+        alert(response.data.message);
       })
       .catch(error => {
         console.error('Error updating user data:', error);
@@ -59,6 +60,7 @@ export default function Profile() {
       const paperData = new FormData();
       paperData.append('resumer', resumerFile);
       paperData.append('auteurId', userData.id );
+      paperData.append('auteurId', 'in progress' );
       api.post('/api/papers', paperData, {
           headers: {
               'Content-Type': 'multipart/form-data',
@@ -302,8 +304,8 @@ export default function Profile() {
       </div>
 
         <div className="py-3 pb-4 border-bottom">
-          <button className="btn btn-primary mr-3" onClick={handleSaveChanges}>Save Changes</button>
-          <button className="btn border button" onClick={handleCancel}>Cancel</button>
+          <button className="btn btn-primary mr-3 m-1" onClick={handleSaveChanges}>Save Changes</button>
+          <button className="btn btn-outline-danger  m-1" onClick={handleCancel}>Cancel</button>
         </div>
       </div>
   <div className='row py-2'>

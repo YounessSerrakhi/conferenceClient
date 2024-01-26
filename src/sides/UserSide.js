@@ -18,7 +18,7 @@ export default function UserSide() {
     <div className="App">
       <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout/>}>
+        <Route path="/conferenceClient" element={<Layout/>}>
           <Route index element={<Home />} />
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} />

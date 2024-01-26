@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/conferenceClient/static/css/main.a18d5789.css",
-    "main.js": "/conferenceClient/static/js/main.3d97d540.js",
+    "main.js": "/conferenceClient/static/js/main.a60d96d9.js",
     "static/js/787.7f889713.chunk.js": "/conferenceClient/static/js/787.7f889713.chunk.js",
     "static/media/affiche.png": "/conferenceClient/static/media/affiche.8a9e60fc5deeba56832b.png",
     "static/media/fa-solid-900.svg": "/conferenceClient/static/media/fa-solid-900.7a8b4f130182d19a2d7c.svg",
@@ -30,11 +30,11 @@
     "static/media/bottom-3200.svg": "/conferenceClient/static/media/bottom-3200.3c975073548f9b352608.svg",
     "index.html": "/conferenceClient/index.html",
     "main.a18d5789.css.map": "/conferenceClient/static/css/main.a18d5789.css.map",
-    "main.3d97d540.js.map": "/conferenceClient/static/js/main.3d97d540.js.map",
+    "main.a60d96d9.js.map": "/conferenceClient/static/js/main.a60d96d9.js.map",
     "787.7f889713.chunk.js.map": "/conferenceClient/static/js/787.7f889713.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a18d5789.css",
-    "static/js/main.3d97d540.js"
+    "static/js/main.a60d96d9.js"
   ]
 }

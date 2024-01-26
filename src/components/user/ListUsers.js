@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 function ListUsers() {
     const [users, setUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const recordsPerPage = 3;
+    const recordsPerPage = 9;
     const lastIndex = currentPage * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
     const records = users.slice(firstIndex, lastIndex);

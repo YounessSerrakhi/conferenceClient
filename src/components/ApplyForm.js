@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import { useAuth } from '../Contexts/AuthContext';
@@ -15,12 +15,21 @@ export default function ApplyForm() {
       const {api} = useAuth(); 
       const navigate=useNavigate();
 
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+    useEffect(()=>{scrollToTop()},[]);
+
       const handleApplication = ()=>{
       //for paper
       if(resumerFile){
         const paperData = new FormData();
         paperData.append('resumer', resumerFile);
         paperData.append('auteurId', Cookies.get('id') );
+        paperData.append('status', "in progress");
         api.defaults.headers['Authorization'] = `Bearer ${Cookies.get('token')}`;
         api.post('/api/apply', paperData, {
             headers: {

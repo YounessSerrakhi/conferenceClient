@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link,useNavigate} from "react-router-dom";
 import { useAuth } from '../../Contexts/AuthContext';
@@ -16,6 +16,14 @@ function Register(){
   const [error, setError] = useState(null);
   const {api} = useAuth();
   const navigate=useNavigate();
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+useEffect(()=>{scrollToTop()},[]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

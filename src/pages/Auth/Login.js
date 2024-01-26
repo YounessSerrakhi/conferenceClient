@@ -8,6 +8,14 @@ import ResetPasswordrequest from './ResetPasswordRequest';
 import { useEffect } from 'react';
 
 function Login() {
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+useEffect(()=>{scrollToTop()},[]);
   
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');

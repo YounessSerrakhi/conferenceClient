@@ -18,7 +18,7 @@ export default function Contact() {
 		api.defaults.headers['Authorization'] = `Bearer ${Cookies.get('token')}`;
 		api.post('/api/contact/add', contactData)
 		  .then(response => {
-			alert(response.data.message);
+			alert("message sent succesfuly");
 			setContactData(prevData => ({
 				...prevData,
 				message:"",
@@ -35,8 +35,8 @@ export default function Contact() {
 						<h2>Questions or comments?</h2>
 					</header>
 
-					<p>If you have any questions or comments, we'd love to hear from you. Our team is here to assist you and provide the information you need. Feel free to reach out to us through our contact form or by emailing us directly.
-						 We value your feedback and look forward to engaging with you.</p>
+					<p>If you have any questions or comments regarding the 4th Conference on Applied Sciences & Computer Engineering (CASCE’23), we'd love to hear from you. Our dedicated team is here to assist and provide the information you need. Feel free to reach out to us through our contact form or by emailing us directly at <strong>casce2023@gmail.com</strong>.</p>
+<p>We highly value your feedback and look forward to engaging with you as we prepare for this exciting event on November 30, 2023, in Marrakech, Morocco.</p>
 
 					<form onSubmit={handleContact}>
 						<div class="row">

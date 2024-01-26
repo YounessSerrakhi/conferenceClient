@@ -18,6 +18,12 @@ export default function Profile() {
   const [applicationStatus,setApplicationStatus]=useState("");
   const navigate = useNavigate();
   const {api} = useAuth(); 
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
 
   const fetchUserData = () => {
     api.defaults.headers['Authorization'] = `Bearer ${Cookies.get('token')}`;
@@ -49,6 +55,7 @@ export default function Profile() {
   };
 
   useEffect(() => {
+    scrollToTop();
     fetchUserData();
   }, []);
 
